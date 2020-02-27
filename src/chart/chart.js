@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 
-import { random } from "./mathUtils";
+import { random, mostCloseTo } from "./mathUtils";
+
+import { getMouseInfo } from "./EvenHandler";
 
 import { scale } from "./components/Scale";
 import CategoryAxis from "./components/Axis/CategoryAxis";
@@ -61,9 +63,13 @@ let option = {
 	padding: 50,
 };
 
+let getStateByOption = option => {};
+
 export default class Chart extends Component {
 	constructor(props) {
 		super(props);
+
+		this.container = React.createRef();
 
 		this.state = {
 			charts: [],
@@ -71,6 +77,8 @@ export default class Chart extends Component {
 			mockData: mockData,
 			xScale: {},
 			yScale: {},
+			mouseCoordinate: {},
+			activeTickItem: {},
 		};
 	}
 
@@ -81,14 +89,15 @@ export default class Chart extends Component {
 			mockData.data[index].y = mockData.y[index];
 		});
 
-		this.setState && this.setState(
-			{
-				mockData: mockData,
-			},
-			() => {
-				this.createScale(this.props, this.state.mockData);
-			}
-		);
+		this.setState &&
+			this.setState(
+				{
+					mockData: mockData,
+				},
+				() => {
+					this.createScale(this.props, this.state.mockData);
+				}
+			);
 	};
 
 	createScale = (props, data) => {
@@ -98,7 +107,7 @@ export default class Chart extends Component {
 		this.setState({
 			xScale: scale(mockData.x, [padding, width - padding], "band"),
 			yScale: scale([0, Math.max(...mockData.y) * 1.2], [height - padding, padding]),
-		})
+		});
 
 		console.log("createScale");
 	};
@@ -113,18 +122,55 @@ export default class Chart extends Component {
 		console.log("------receiveprops");
 	}
 
-	getStateByOption = option => {};
-
 	renderCharts = () => {};
 
 	renderComponents = () => {};
+
+	handleOnClick = event => {
+		event.persist();
+		let mouseCoordinate = getMouseInfo(event, this.container);
+		this.setState(
+			{
+				mouseCoordinate,
+			},
+			() => {
+				this.getActiveTickItem();
+			}
+		);
+	};
+
+	getActiveTickItem = () => {
+		if (this.inRange()) {
+			let { xScale, yScale, mouseCoordinate } = this.state;
+			let activeData = mostCloseTo(mouseCoordinate.chartX, xScale.ticks());
+			let activeTick = xScale.invert(activeData);
+			console.log(activeData, activeTick);
+		} else {
+			this.setState({
+				activeTickItem: null,
+			});
+		}
+	};
+
+	inRange = () => {
+		let { mouseCoordinate } = this.state;
+		let { width = 800, height = 500, padding = 50 } = this.props;
+		let x = mouseCoordinate.chartX;
+		let y = mouseCoordinate.chartY;
+
+		if (x && x < width - padding && x > padding && y && y < height - padding && y > padding) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	render() {
 		const { width, height } = this.props;
 		const { mockData, xScale, yScale } = this.state;
 
 		return (
-			<React.Fragment>
+			<div onClick={this.handleOnClick} ref={this.container}>
 				<svg width={width} height={height}>
 					<Line data={mockData.data} xScale={xScale} yScale={yScale}></Line>
 					<Area data={mockData.data} xScale={xScale} yScale={yScale}></Area>
@@ -150,7 +196,7 @@ export default class Chart extends Component {
 					></NumberAxis>
 				</svg>
 				<button onClick={this.changeData}>改变数据</button>
-			</React.Fragment>
+			</div>
 		);
 	}
 }
