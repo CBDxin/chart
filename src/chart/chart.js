@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { random, mostCloseTo } from "./mathUtils";
+import { random, getActiveIndex } from "./mathUtils";
 
 import { getMouseInfo } from "./EvenHandler";
 
@@ -45,7 +45,7 @@ props = {
 }
 */
 
-const mockData = {
+const chartData = {
 	x: ["一", "二", "三", "四", "五"],
 	y: [300, 500, 400, 900, 100],
 	data: [
@@ -74,48 +74,49 @@ export default class Chart extends Component {
 		this.state = {
 			charts: [],
 			components: [],
-			mockData: mockData,
+			chartData: chartData,
 			xScale: {},
 			yScale: {},
 			mouseCoordinate: {},
+			activeIndex:null,
 			activeTickItem: {},
 		};
 	}
 
 	changeData = () => {
-		mockData.y.map((item, index) => {
+		chartData.y.map((item, index) => {
 			let randomNum = random(3);
-			mockData.y[index] = randomNum;
-			mockData.data[index].y = mockData.y[index];
+			chartData.y[index] = randomNum;
+			chartData.data[index].y = chartData.y[index];
 		});
 
 		this.setState &&
 			this.setState(
 				{
-					mockData: mockData,
+					chartData: chartData,
 				},
 				() => {
-					this.createScale(this.props, this.state.mockData);
+					this.createScale(this.props, this.state.chartData);
 				}
 			);
 	};
 
 	createScale = (props, data) => {
 		const { padding, width, height } = props;
-		const mockData = data;
+		const chartData = data;
 
 		this.setState({
-			xScale: scale(mockData.x, [padding, width - padding], "band"),
-			yScale: scale([0, Math.max(...mockData.y) * 1.2], [height - padding, padding]),
+			xScale: scale(chartData.x, [padding, width - padding], "band"),
+			yScale: scale([0, Math.max(...chartData.y) * 1.2], [height - padding, padding]),
 		});
 
 		console.log("createScale");
 	};
 
 	componentWillMount = () => {
-		this.createScale(this.props, this.state.mockData);
+		this.createScale(this.props, this.state.chartData);
 
-		console.log("-----willmount", this.state.mockData);
+		console.log("-----willmount", this.state.chartData);
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
@@ -141,10 +142,17 @@ export default class Chart extends Component {
 
 	getActiveTickItem = () => {
 		if (this.inRange()) {
-			let { xScale, yScale, mouseCoordinate } = this.state;
-			let activeData = mostCloseTo(mouseCoordinate.chartX, xScale.ticks());
-			let activeTick = xScale.invert(activeData);
-			console.log(activeData, activeTick);
+			let { xScale, yScale, mouseCoordinate, chartData } = this.state;
+			let activeIndex = getActiveIndex(mouseCoordinate.chartX, xScale.ticks());
+			let activeTick = chartData.x[activeIndex];
+			let activeData  = chartData.y[activeIndex];
+			this.setState({
+				activeTick,
+				activeTickItem:{
+					activeTick,
+					activeData
+				}
+			})
 		} else {
 			this.setState({
 				activeTickItem: null,
@@ -167,31 +175,31 @@ export default class Chart extends Component {
 
 	render() {
 		const { width, height } = this.props;
-		const { mockData, xScale, yScale } = this.state;
+		const { chartData, xScale, yScale } = this.state;
 
 		return (
 			<div onClick={this.handleOnClick} ref={this.container}>
 				<svg width={width} height={height}>
-					<Line data={mockData.data} xScale={xScale} yScale={yScale}></Line>
-					<Area data={mockData.data} xScale={xScale} yScale={yScale}></Area>
+					<Line data={chartData.data} xScale={xScale} yScale={yScale}></Line>
+					<Area data={chartData.data} xScale={xScale} yScale={yScale}></Area>
 					<CategoryAxis
 						option={{ ...option, position: "bottom" }}
-						data={mockData.x}
+						data={chartData.x}
 						scale={xScale}
 					></CategoryAxis>
 					<CategoryAxis
 						option={{ ...option, position: "top" }}
-						data={mockData.x}
+						data={chartData.x}
 						scale={xScale}
 					></CategoryAxis>
 					<NumberAxis
 						option={{ ...option, position: "left" }}
-						data={mockData.y}
+						data={chartData.y}
 						scale={yScale}
 					></NumberAxis>
 					<NumberAxis
 						option={{ ...option, position: "right" }}
-						data={mockData.y}
+						data={chartData.y}
 						scale={yScale}
 					></NumberAxis>
 				</svg>
