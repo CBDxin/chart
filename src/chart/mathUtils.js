@@ -12,7 +12,7 @@ export function getActiveIndex(x, list){
     if(index === 0){
       result = index
     }else{
-      if(Math.abs(x - item) > Math.abs(x - list[index - 1])){
+      if(Math.abs(x - item) >= Math.abs(x - list[index - 1])){
         result = index - 1;
         return true;
       }else{

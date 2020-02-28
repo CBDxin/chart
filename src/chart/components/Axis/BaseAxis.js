@@ -25,7 +25,8 @@ props:{
 class BaseAxis extends Component {
 	getAxisLinePath = (props) => {
     props = props || this.props;
-		const { padding, width, height, position } = props.option;
+		const { padding, width, height } = this.props.wrapperStyle;
+		let { position } = this.props;
 		let x0 = position !== "right" ? padding : width - padding,
 			y0 = position !== "bottom" ? padding : height - padding,
 			x1 = position !== "left" ? width - padding : padding,
@@ -46,7 +47,8 @@ class BaseAxis extends Component {
 	};
 
 	renderTexts = () => {
-    const { position, padding, width, height, fontSize = 12 } = this.props.option;
+    const { padding, width, height } = this.props.wrapperStyle;
+		let { position, fontSize = 12 } = this.props;
 		return this.state.tickItems.map((item, index) => (
 			<text
 				fontSize={fontSize}
@@ -74,7 +76,8 @@ class BaseAxis extends Component {
 	};
 
 	renderTicks = () => {
-    const { position, padding, width, height, fontSize = 12 } = this.props.option;
+		const { padding, width, height } = this.props.wrapperStyle;
+		let { position, fontSize = 12 } = this.props;
 		return this.state.tickItems.map((item, index) => (
 			<Line
 				data={[

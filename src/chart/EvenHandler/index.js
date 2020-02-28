@@ -4,7 +4,6 @@ export let getMouseInfo = (event, container) => {
 	}
   let containerOffset = getOffset(container);
   let chartCoordinate = calculateChartCoordinate(event, containerOffset);
-  console.log(chartCoordinate)
 
   return chartCoordinate;
 };
