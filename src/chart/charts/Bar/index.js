@@ -1,33 +1,46 @@
-import React, { Component } from "react";
-import { select } from "d3";
-import {scale} from "../../components/Scale";
-import Axis from "../../components/Axis/CategoryAxis";
-import { random } from "../../mathUtils";
+import React from "react";
+import BaseShape from "../BaseShape";
+import Reactangle from "../../shape/Reactangle";
 
-const mockData = {
-	x: ["一", "二", "三", "四", "五"],
-	y: [300, 500, 400, 900, 100],
-};
+const WIDTH = 0.3;
 
-let xScale = scale(mockData.x, [50, 750], 'band');
-let yscale = scale([0, Math.max(mockData.y) * 1.2], [450, 50]);
+class Bar extends BaseShape {
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		d: "",
+	// 	};
 
-class Bar extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			id: "bar" + random(5),
-		};
-	}
+	// }
 
-	componentWillMount() {
-		
-	}
+	// componentDidMount = () => {
+	//   this.createPath()
+	// };
 
+	// UNSAFE_componentWillReceiveProps(nextProps){
+	// 	this.createPath(nextProps);
+	// }
+
+	createReacts = props => {
+		let { data, xScale, yScale, wrapperStyle } = props || this.props;
+		let bandWidth = xScale.bandwidth();
+		let width = bandWidth * WIDTH;
+
+		return data.map((item, index) => {
+			return (
+				<Reactangle
+					key={index}
+					x={xScale(item.domain) - width / 2}
+					y={yScale(item.range)}
+					height={wrapperStyle.height - wrapperStyle.padding - yScale(item.range)}
+					width={width}
+				></Reactangle>
+			);
+		});
+	};
 
 	render() {
-		const { id } = this.state;
-		return <div id={id}></div>;
+		return <g>{this.createReacts()}</g>;
 	}
 }
 

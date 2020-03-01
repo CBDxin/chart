@@ -62,7 +62,7 @@ let createScale = (chartData, wrapperStyle) => {
 		rangeData = [...rangeData, ...chartData.range[rangeItem]]
 	});
 
-	let xScale = Components.scale(chartData.domain, [padding, width - padding], "band");
+	let xScale = Components.scale(chartData.domain, [padding, width - padding], "bandWithPadding");
 	let yScale = Components.scale(
 		[0, Math.max(...rangeData) * 1.2],
 		[height - padding, padding]
@@ -79,3 +79,15 @@ let createScale = (chartData, wrapperStyle) => {
 // };
 
 // let componentRegister = (component , chartData) => {};
+
+export let hasType = (container, type)=>{
+	let result = false;
+	container.some(item=>{
+		if(item.type === type){
+			result = true;
+			return true;
+		}
+	})
+
+	return result;
+}

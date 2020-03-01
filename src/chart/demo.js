@@ -14,20 +14,19 @@ let option = {
 	components: [
 		{
 			type: "xAxis",
-			option: {},
+			position:"bottom"
 		},
 		{
 			type: "yAxis",
-			option: {},
+			position:"left"
 		},
 		{
 			type: "Tooltip",
-			option: {},
 		},
 	],
 	charts: [
 		{
-			type: "Area",
+			type: "Bar",
 			name: "小米",
 			data: "xiaoMi",
 		},
