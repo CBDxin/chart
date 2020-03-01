@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { select } from "d3";
-import { scale } from "../../components/Scale";
+import {scale} from "../../components/Scale";
 import Axis from "../../components/Axis/CategoryAxis";
 import { random } from "../../mathUtils";
 

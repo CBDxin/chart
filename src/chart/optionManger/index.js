@@ -1,32 +1,81 @@
-/*
-  return {
-    charts:[],//图表组件列表
-    components:[],//工具组件列表
-  }
-*/
-export let setOption = option => {
-	let chartsOption = option.charts;
-	let componentsOption = option.components;
-	let model = {
-		charts: [],
-		components: [],
-	};
+import Charts from "../charts";
+import Components from "../components";
 
-	if (chartsOption) {
-		chartsOption.map(chartOption => {
-			model.charts.push(chartRegister(chartOption));
-		});
+
+export let getStateByOption = option => {
+	let chartData = formaDataSet(option.dataSet);
+	let wrapperStyle = {
+		height: option.height || 500,
+		width: option.width || 800,
+		padding: option.padding || 50,
+	};
+	let scaleMap = createScale(chartData, wrapperStyle);
+
+	return {
+		chartData,
+		wrapperStyle,
+		charts:option.charts,
+		components:option.components,
+		...scaleMap
 	}
 
-	if (componentsOption) {
-		componentsOption.map(componentOption => {
-			model.components.push(componentRegister(componentOption));
-		});
-  }
-  
-  return model;
+	// if (option.charts) {
+	// 	option.charts.map(chart => {
+	// 		model.charts.push(chartRegister(chart, chartData));
+	// 	});
+	// }
+
+	// if (option.components) {
+	// 	option.components.map(component => {
+	// 		model.components.push(componentRegister(component));
+	// 	});
+	// }
+
 };
 
-let chartRegister = chartOption => {};
+let formaDataSet = dataSet => {
+	let data = {
+		...dataSet,
+		data: [],
+	};
 
-let componentRegister = componentOption => {};
+	Object.keys(dataSet.range).map(rangeItem => {
+		data.data[rangeItem] = [] 
+		data.domain.map((item, index) => {
+			let t = {
+				domain: dataSet.domain[index],
+				range:dataSet.range[rangeItem][index]
+			};
+	
+			data.data[rangeItem].push(t);
+		});
+	});
+
+	return data;
+};
+
+let createScale = (chartData, wrapperStyle) => {
+	const { padding = 50, width = 800, height = 500 } = wrapperStyle;
+
+	let rangeData = [];
+	Object.keys(chartData.range).map(rangeItem => {
+		rangeData = [...rangeData, ...chartData.range[rangeItem]]
+	});
+
+	let xScale = Components.scale(chartData.domain, [padding, width - padding], "band");
+	let yScale = Components.scale(
+		[0, Math.max(...rangeData) * 1.2],
+		[height - padding, padding]
+	);
+
+	return {
+		xScale,
+		yScale,
+	};
+};
+
+// let chartRegister = (chart, chartData) => {
+// 	let ChartItem = charts[chart];
+// };
+
+// let componentRegister = (component , chartData) => {};

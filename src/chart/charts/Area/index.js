@@ -22,10 +22,10 @@ class Area extends BaseShape {
 		let { data, xScale, yScale } = props || this.props;
 		let path = area()
 			.x(item => {
-				return xScale(item.x);
+				return xScale(item.domain);
 			})
 			.y1(item => {
-				return yScale(item.y);
+				return yScale(item.range);
 			})
 			.y0(450);
 

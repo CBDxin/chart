@@ -1,23 +1,53 @@
 import React, { Component } from "react";
-import { scale } from "./components/Scale";
-import Chart from './chart'
+import Chart from "./chart";
+
+let option = {
+	height:500,
+	width:800,
+	dataSet: {
+		domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
+		range:{
+			xiaoMi: [300, 900, 500, 600, 755, 200],
+			huaWei: [500, 700, 600, 200, 900, 500]
+		},
+	},
+	components: [
+		{
+			type: "xAxis",
+			option: {},
+		},
+		{
+			type: "yAxis",
+			option: {},
+		},
+		{
+			type: "Tooltip",
+			option: {},
+		},
+	],
+	charts: [
+		{
+			type: "Area",
+			name: "小米",
+			data: "xiaoMi",
+		},
+		{
+			type: "Line",
+			name: "华为",
+			data: "huaWei",
+		},
+	],
+};
 
 class Demo extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	scaleLinear = scale([0, 100], [0, 1000]);
-
-	scaleBand = scale([1, 2, 3, 4], [0, 100], "band");
-
 	render() {
 		return (
 			<div>
-				{this.scaleLinear(10)}
-				<br />
-				{this.scaleBand(2)}
-				<Chart padding={50} width={800} height={500}></Chart>
+				<Chart option={option}></Chart>
 			</div>
 		);
 	}

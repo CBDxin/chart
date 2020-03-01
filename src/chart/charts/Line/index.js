@@ -23,10 +23,10 @@ class Line extends BaseShape {
     let { data, xScale, yScale } = props || this.props;
     let path = line()
 			.x(item => {
-				return xScale(item.x);
+				return xScale(item.domain);
 			})
 			.y(item => {
-				return yScale(item.y);
+				return yScale(item.range);
 			});
 
 		this.setState({

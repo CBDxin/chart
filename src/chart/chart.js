@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 
-import { random, getActiveIndex } from "./mathUtils";
+import { getActiveIndex } from "./mathUtils";
 
 import { getMouseInfo } from "./EvenHandler";
+import { getStateByOption } from "./optionManger";
 
-import { scale } from "./components/Scale";
-import CategoryAxis from "./components/Axis/CategoryAxis";
-import NumberAxis from "./components/Axis/NumberAxis";
-import Tooltip from "./components/Tooltip";
-
-import Line from "./charts/Line";
-import Area from "./charts/Area";
+import Charts from "./charts";
+import Components from "./components";
 
 import "./index.less";
 
@@ -48,26 +44,6 @@ props = {
 }
 */
 
-const chartData = {
-	domain: ["一", "二", "三", "四", "五"],
-	range: { y: [300, 500, 400, 900, 100] },
-	data: [
-		{ x: "一", y: 300 },
-		{ x: "二", y: 500 },
-		{ x: "三", y: 400 },
-		{ x: "四", y: 900 },
-		{ x: "五", y: 100 },
-	],
-};
-
-let wrapperStyle = {
-	height: 500,
-	width: 800,
-	padding: 50,
-};
-
-let getStateByOption = option => {};
-
 export default class Chart extends Component {
 	constructor(props) {
 		super(props);
@@ -75,71 +51,72 @@ export default class Chart extends Component {
 		this.container = React.createRef();
 
 		this.state = {
-			charts: [],
-			components: [],
-			chartData: chartData,
+			charts: null,
+			components: null,
+			chartData: null,
 			xScale: null,
 			yScale: null,
 			mouseCoordinate: null,
 			activeTickItem: null,
+			wrapperStyle: {},
 		};
 	}
 
-	changeData = () => {
-		chartData.range.y.map((item, index) => {
-			let randomNum = random(3);
-			chartData.range.y[index] = randomNum;
-			chartData.data[index].y = chartData.range.y[index];
-		});
-
-		this.setState &&
-			this.setState(
-				{
-					chartData: chartData,
-				},
-				() => {
-					this.createScale(this.props, this.state.chartData);
-				}
-			);
-	};
-
-	createScale = (props, data) => {
-		const { padding, width, height } = props;
-		const chartData = data;
-
-		this.setState({
-			xScale: scale(chartData.domain, [padding, width - padding], "band"),
-			yScale: scale([0, Math.max(...chartData.range.y) * 1.2], [height - padding, padding]),
-		});
-
-		console.log("createScale");
-	};
-
 	componentWillMount = () => {
-		this.createScale(this.props, this.state.chartData);
+		const { option } = this.props;
 
-		console.log("-----willmount", this.state.chartData);
+		this.setState(
+			{
+				...this.state,
+				...getStateByOption(option),
+			},
+			() => {
+				this.renderCharts();
+			}
+		);
+
+		console.log("-----willmount", getStateByOption(option));
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
+		const { option } = this.nextProps;
+
+		this.setState({
+			...this.state,
+			...getStateByOption(option),
+		});
+
 		console.log("------receiveprops");
 	}
 
-	renderCharts = () => {};
+	renderCharts = () => {
+		let { charts, xScale, yScale, chartData } = this.state;
+
+		if (!chartData) {
+			return;
+		}
+
+		return charts.map((item, index) => {
+			let Chart = Charts[item.type];
+			return (
+				<Chart
+					key={index}
+					data={chartData.data[item.data]}
+					xScale={xScale}
+					yScale={yScale}
+				></Chart>
+			);
+		});
+	};
 
 	renderComponents = () => {};
 
 	handleOnClick = event => {
 		event.persist();
 		let mouseCoordinate = getMouseInfo(event, this.container);
-		this.setState(
-			{
-				mouseCoordinate,
-			},
-			() => {
-				this.getActiveTickItem();
-			}
-		);
+		this.setState({
+			mouseCoordinate,
+		});
 	};
 
 	handleOnMouseMove = event => {
@@ -160,7 +137,7 @@ export default class Chart extends Component {
 		this.setState({
 			activeTickItem: null,
 		});
-		console.log('----mouseout')
+		console.log("----mouseout");
 	};
 
 	getActiveTickItem = () => {
@@ -190,7 +167,7 @@ export default class Chart extends Component {
 			this.setState({
 				activeTickItem: null,
 			});
-			console.log('---outrange')
+			console.log("---outrange");
 		}
 	};
 
@@ -208,36 +185,20 @@ export default class Chart extends Component {
 	};
 
 	render() {
-		const { width, height } = this.props;
-		const { chartData, xScale, yScale, activeTickItem } = this.state;
+		const { width = 800, height = 500, padding = 50 } = this.props.option;
 
 		return (
-			<div className="chart-wrapper" 
-				onClick={this.handleOnClick} 
+			<div
+				className="chart-wrapper"
+				onClick={this.handleOnClick}
 				onMouseLeave={this.handleOnMouseOut}
 				onMouseMove={this.handleOnMouseMove}
 				ref={this.container}
 			>
-				<Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip>
+				{/* <Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip> */}
 				<svg width={width} height={height}>
-					<Line data={chartData.data} xScale={xScale} yScale={yScale}></Line>
-					<Area data={chartData.data} xScale={xScale} yScale={yScale}></Area>
-					<CategoryAxis
-						wrapperStyle={wrapperStyle}
-						position="bottom"
-						data={chartData.domain}
-						scale={xScale}
-					></CategoryAxis>
-					<CategoryAxis
-						wrapperStyle={wrapperStyle}
-						position="top"
-						data={chartData.domain}
-						scale={xScale}
-					></CategoryAxis>
-					<NumberAxis wrapperStyle={wrapperStyle} position="left" scale={yScale}></NumberAxis>
-					<NumberAxis wrapperStyle={wrapperStyle} position="right" scale={yScale}></NumberAxis>
+					{this.renderCharts()}
 				</svg>
-				{/* <button onClick={this.changeData}>改变数据</button> */}
 			</div>
 		);
 	}

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { scale } from "../../components/Scale";
+import {scale} from "../../components/Scale";
 
 const mockData = {
 	x: ["一", "二", "三", "四", "五"],
