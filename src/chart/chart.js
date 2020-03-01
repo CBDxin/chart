@@ -94,9 +94,11 @@ export default class Chart extends Component {
 			return;
 		}
 
+		console.log(chartData)
+
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
-			return (
+			return Chart && (
 				<Chart
 					key={index}
 					data={chartData.data[item.data]}

@@ -21,7 +21,7 @@ class Bar extends BaseShape {
 	// 	this.createPath(nextProps);
 	// }
 
-	createReacts = props => {
+	createRects = props => {
 		let { data, xScale, yScale, wrapperStyle } = props || this.props;
 		let bandWidth = xScale.bandwidth();
 		let width = bandWidth * WIDTH;
@@ -40,7 +40,7 @@ class Bar extends BaseShape {
 	};
 
 	render() {
-		return <g>{this.createReacts()}</g>;
+		return <g>{this.createRects()}</g>;
 	}
 }
 

@@ -37,6 +37,36 @@ let option = {
 		},
 	],
 };
+let option1 = {
+	height:500,
+	width:800,
+	dataSet: {
+		domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
+		range:{
+			xiaoMi: [300, 900, 500, 600, 755, 200],
+			huaWei: [500, 700, 600, 200, 900, 500]
+		},
+	},
+	components: [
+		{
+			type: "xAxis",
+			position:"bottom"
+		},
+		{
+			type: "yAxis",
+			position:"left"
+		},
+	],
+	charts: [
+		{
+			type: "Pie",
+			name: "小米",
+			data: "xiaoMi",
+		}
+	],
+};
+
+
 
 class Demo extends Component {
 	constructor(props) {
@@ -47,6 +77,7 @@ class Demo extends Component {
 		return (
 			<div>
 				<Chart option={option}></Chart>
+				<Chart option={option1}></Chart>
 			</div>
 		);
 	}
