@@ -26,12 +26,12 @@ let option = {
 	],
 	charts: [
 		{
-			type: "Bar",
+			type: "Line",
 			name: "小米",
 			data: "xiaoMi",
 		},
 		{
-			type: "Line",
+			type: "Scatter",
 			name: "华为",
 			data: "huaWei",
 		},

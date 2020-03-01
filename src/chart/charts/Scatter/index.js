@@ -1,10 +1,9 @@
 import React from "react";
 import BaseShape from "../BaseShape";
-import Rectangle from "../../shape/Rectangle";
 
-const WIDTH = 0.3;
+const WIDTH = 0.1;
 
-class Bar extends BaseShape {
+class Scatter extends BaseShape {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -21,27 +20,26 @@ class Bar extends BaseShape {
 	// 	this.createPath(nextProps);
 	// }
 
-	createReacts = props => {
+	createCircles = props => {
 		let { data, xScale, yScale, wrapperStyle } = props || this.props;
 		let bandWidth = xScale.bandwidth();
-		let width = bandWidth * WIDTH;
+		let defaultWidth = bandWidth * WIDTH;
 
 		return data.map((item, index) => {
 			return (
-				<rect
+				<circle
 					key={index}
-					x={xScale(item.domain) - width / 2}
-					y={yScale(item.range)}
-					height={wrapperStyle.height - wrapperStyle.padding - yScale(item.range)}
-					width={width}
-				></rect>
+					cx={xScale(item.domain)}
+					cy={yScale(item.range)}
+					r={defaultWidth}
+				></circle>
 			);
 		});
 	};
 
 	render() {
-		return <g>{this.createReacts()}</g>;
+		return <g>{this.createCircles()}</g>;
 	}
 }
 
-export default Bar;
+export default Scatter;
