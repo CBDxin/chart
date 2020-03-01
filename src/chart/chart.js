@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { getActiveIndex } from "./mathUtils";
 
 import { getMouseInfo } from "./EvenHandler";
-import { getStateByOption } from "./optionManger";
+import { getStateByOption, hasType } from "./optionManger";
 
 import Charts from "./charts";
 import Components from "./components";
@@ -70,9 +70,7 @@ export default class Chart extends Component {
 				...this.state,
 				...getStateByOption(option),
 			},
-			() => {
-				this.renderCharts();
-			}
+			() => {}
 		);
 
 		console.log("-----willmount", getStateByOption(option));
@@ -90,7 +88,7 @@ export default class Chart extends Component {
 	}
 
 	renderCharts = () => {
-		let { charts, xScale, yScale, chartData } = this.state;
+		let { charts, xScale, yScale, chartData, wrapperStyle } = this.state;
 
 		if (!chartData) {
 			return;
@@ -104,12 +102,58 @@ export default class Chart extends Component {
 					data={chartData.data[item.data]}
 					xScale={xScale}
 					yScale={yScale}
+					wrapperStyle={wrapperStyle}
 				></Chart>
 			);
 		});
 	};
 
-	renderComponents = () => {};
+	renderComponents = () => {
+		let { components, wrapperStyle, xScale, yScale, chartData } = this.state;
+
+		if (!components) {
+			return null;
+		}
+
+		return components.map((item, index) => {
+			switch (item.type) {
+				case "xAxis":
+					let CategoryAxis = Components.CategoryAxis;
+					return (
+						<CategoryAxis
+							key={index}
+							scale={xScale}
+							data={chartData.domain}
+							position={item.position}
+							wrapperStyle={wrapperStyle}
+						></CategoryAxis>
+					);
+				case "yAxis":
+					let NumberAxis = Components.NumberAxis;
+					return (
+						<NumberAxis
+							key={index}
+							scale={yScale}
+							position={item.position}
+							wrapperStyle={wrapperStyle}
+						></NumberAxis>
+					);
+				default:
+					return null;
+			}
+		});
+	};
+
+	renderTooltip = () => {
+		let { wrapperStyle, activeTickItem, components } = this.state;
+
+		if (!hasType(components, "Tooltip")) {
+			return null;
+		}
+
+		let Tooltip = Components.Tooltip;
+		return <Tooltip wrapperStyle={wrapperStyle} activeTickItem={activeTickItem}></Tooltip>;
+	};
 
 	handleOnClick = event => {
 		event.persist();
@@ -120,6 +164,11 @@ export default class Chart extends Component {
 	};
 
 	handleOnMouseMove = event => {
+		let { components } = this.state;
+		if (!hasType(components, "Tooltip")) {
+			return null;
+		}
+
 		event.persist();
 		let mouseCoordinate = getMouseInfo(event, this.container);
 		this.setState(
@@ -133,6 +182,11 @@ export default class Chart extends Component {
 	};
 
 	handleOnMouseLeave = event => {
+		let { components } = this.state;
+		if (!hasType(components, "Tooltip")) {
+			return null;
+		}
+
 		event.persist();
 		this.setState({
 			activeTickItem: null,
@@ -185,7 +239,7 @@ export default class Chart extends Component {
 	};
 
 	render() {
-		const { width = 800, height = 500, padding = 50 } = this.props.option;
+		const { width = 800, height = 500 } = this.props.option;
 
 		return (
 			<div
@@ -195,9 +249,11 @@ export default class Chart extends Component {
 				onMouseMove={this.handleOnMouseMove}
 				ref={this.container}
 			>
+				{this.renderTooltip()}
 				{/* <Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip> */}
 				<svg width={width} height={height}>
 					{this.renderCharts()}
+					{this.renderComponents()}
 				</svg>
 			</div>
 		);
