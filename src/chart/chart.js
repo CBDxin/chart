@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import { getActiveIndex } from "./mathUtils";
+import { getActiveIndex } from "./util/mathUtils";
+import { color3 } from "./util/color";
 
 import { getMouseInfo } from "./EvenHandler";
 import { getStateByOption, hasType } from "./optionManger";
@@ -101,6 +102,8 @@ export default class Chart extends Component {
 			return Chart && (
 				<Chart
 					key={index}
+					chartIndex={index}
+					color={color3}
 					data={chartData.data[item.data]}
 					xScale={xScale}
 					yScale={yScale}

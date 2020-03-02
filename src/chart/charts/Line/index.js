@@ -36,7 +36,8 @@ class Line extends BaseShape {
 
 	render() {
 		const { d } = this.state;
-		return <g>{d && <path d={d} className="line" fill="none" stroke = "#000" strokeWidth="2px"></path>}</g>;
+		const { chartIndex, color } = this.props;
+		return <g>{d && <path d={d} className="line" fill="none" stroke = {color[chartIndex]} strokeWidth="2px"></path>}</g>;
 	}
 }
 

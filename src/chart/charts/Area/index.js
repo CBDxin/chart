@@ -2,6 +2,8 @@ import React from "react";
 import BaseShape from "../BaseShape";
 import { area } from "d3";
 
+import LinearGradient from "../../components/LinearGradient";
+
 class Area extends BaseShape {
 	constructor(props) {
 		super(props);
@@ -18,7 +20,7 @@ class Area extends BaseShape {
 		this.createPath(nextProps);
 	}
 
-	createPath = (props) => {
+	createPath = props => {
 		let { data, xScale, yScale } = props || this.props;
 		let path = area()
 			.x(item => {
@@ -36,7 +38,14 @@ class Area extends BaseShape {
 
 	render() {
 		const { d } = this.state;
-		return <g>{d && <path d={d} className="area" fill="red" stroke="rea"></path>}</g>;
+		const { chartIndex, color } = this.props;
+		return(
+			<React.Fragment>
+				<LinearGradient id="area" colors={color}></LinearGradient>
+				<g>{d && <path opacity={0.3}  fill={"url(#area)"} d={d} className="area"></path>}</g>
+				{/* <g>{d && <path opacity={0.3} fill={color[chartIndex]} d={d} className="area"></path>}</g> */}
+			</React.Fragment>
+		)
 	}
 }
 

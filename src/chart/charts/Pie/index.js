@@ -1,15 +1,34 @@
 import React from "react";
 import BaseShape from "../BaseShape";
-import Rectangle from "../../shape/Rectangle";
-import { scaleOrdinal, schemeSet3, pie, arc } from "d3";
+import { pie, arc } from "d3";
+import {colorLight, colorHeavy} from "../../util/color";
+import { scale } from "../../components/Scale";
 
-// let colorScale = scaleOrdinal()
-//       .domain(contentData)
-//       .range(schemeSet3)
-
-const WIDTH = 0.3;
 
 class Pie extends BaseShape {
+  constructor(props){
+    super(props);
+    this.state={
+      colorScale:null
+    }
+  }
+
+  componentWillMount(){
+    this.getColorSCale()
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this.getColorSCale(nextProps)
+  }
+
+  getColorSCale = (props)=>{
+    const { chartIndex, data } = props || this.props;
+    let colorScale = scale([0, data.length - 1], [colorLight[chartIndex], colorHeavy[chartIndex]])
+    this.setState({
+      colorScale
+    })
+  }
+
 	createArcs = props => {
 		let {
 			data,
@@ -17,13 +36,15 @@ class Pie extends BaseShape {
 			innerRadius = 0,
 			cx = this.props.wrapperStyle.width / 2,
 			cy = this.props.wrapperStyle.height / 2,
-		} = props || this.props;
+    } = props || this.props;
+    
+    const { colorScale } = this.state;
 
 		let style = {
 			transform: `translate(${cx}px,${cy}px)`,
 		};
 
-		let pieCreator = pie().value(d => d.range);
+		let pieCreator = pie().value(d => d.range).sort((a, b)=>b);
 		let pieData = pieCreator(data);
 		let pieArc = arc()
 			.innerRadius(innerRadius)
@@ -32,7 +53,7 @@ class Pie extends BaseShape {
 		return pieData.map((item, index) => {
 			return (
 				<g style={style} key={index}>
-					<path d={pieArc(item)}></path>
+					<path fill={colorScale(index)} d={pieArc(item)}></path>
 				</g>
 			);
 		});

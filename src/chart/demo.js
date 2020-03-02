@@ -8,7 +8,10 @@ let option = {
 		domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
 		range:{
 			xiaoMi: [300, 900, 500, 600, 755, 200],
-			huaWei: [500, 700, 600, 200, 900, 500]
+			huaWei: [500, 700, 600, 200, 900, 500],
+			oppo: [100, 500, 20, 300, 700, 500],
+			vivo: [700, 200, 900, 120, 1200, 300],
+			iphone: [800, 600, 900, 1500, 300, 500]
 		},
 	},
 	components: [
@@ -26,14 +29,29 @@ let option = {
 	],
 	charts: [
 		{
-			type: "Line",
+			type: "Area",
 			name: "小米",
 			data: "xiaoMi",
 		},
 		{
-			type: "Scatter",
+			type: "Area",
 			name: "华为",
 			data: "huaWei",
+		},
+		{
+			type: "Area",
+			name: "oppo",
+			data: "oppo",
+		},
+		{
+			type: "Area",
+			name: "vivo",
+			data: "vivo",
+		},
+		{
+			type: "Area",
+			name: "苹果",
+			data: "iphone",
 		},
 	],
 };

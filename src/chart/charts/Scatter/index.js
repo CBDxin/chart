@@ -21,7 +21,7 @@ class Scatter extends BaseShape {
 	// }
 
 	createCircles = props => {
-		let { data, xScale, yScale, wrapperStyle } = props || this.props;
+		let { data, xScale, yScale, chartIndex, color } = props || this.props;
 		let bandWidth = xScale.bandwidth();
 		let defaultWidth = bandWidth * WIDTH;
 
@@ -31,7 +31,8 @@ class Scatter extends BaseShape {
 					key={index}
 					cx={xScale(item.domain)}
 					cy={yScale(item.range)}
-					r={defaultWidth}
+          r={defaultWidth}
+          fill={color[chartIndex]}
 				></circle>
 			);
 		});
