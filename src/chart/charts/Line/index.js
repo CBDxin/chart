@@ -1,6 +1,6 @@
 import React from "react";
 import BaseShape from "../BaseShape";
-import { line } from "d3";
+import { line, curveCardinal } from "d3";
 
 class Line extends BaseShape {
 	constructor(props) {
@@ -28,6 +28,8 @@ class Line extends BaseShape {
 			.y(item => {
 				return yScale(item.range);
 			});
+			
+			// path.curve(curveCardinal);
 
 		this.setState({
 			d: path(data),
@@ -36,8 +38,14 @@ class Line extends BaseShape {
 
 	render() {
 		const { d } = this.state;
-		const { chartIndex, color } = this.props;
-		return <g>{d && <path d={d} className="line" fill="none" stroke = {color[chartIndex]} strokeWidth="2px"></path>}</g>;
+		const { option, colorScale, isActive } = this.props;
+		return (
+			<React.Fragment>
+				<g>{d && <path d={d} className="line" fill="none" stroke = {colorScale(option.key)} strokeWidth={isActive ? "3px" : "2px"}></path>}</g>
+				{this.renderDot()}
+			</React.Fragment>
+		)
+		
 	}
 }
 

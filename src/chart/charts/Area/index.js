@@ -1,6 +1,6 @@
 import React from "react";
 import BaseShape from "../BaseShape";
-import { area } from "d3";
+import { area, curveCardinal } from "d3";
 
 import LinearGradient from "../../components/LinearGradient";
 
@@ -31,6 +31,8 @@ class Area extends BaseShape {
 			})
 			.y0(450);
 
+		path.curve(curveCardinal)
+
 		this.setState({
 			d: path(data),
 		});
@@ -38,12 +40,13 @@ class Area extends BaseShape {
 
 	render() {
 		const { d } = this.state;
-		const { chartIndex, color } = this.props;
+		const { colorScale, option, isActive } = this.props;
 		return(
 			<React.Fragment>
-				<LinearGradient id="area" colors={color}></LinearGradient>
-				<g>{d && <path opacity={0.3}  fill={"url(#area)"} d={d} className="area"></path>}</g>
-				{/* <g>{d && <path opacity={0.3} fill={color[chartIndex]} d={d} className="area"></path>}</g> */}
+				{/* <LinearGradient id="area" colors={color}></LinearGradient> */}
+				{/* <g>{d && <path opacity={0.3}  fill={"url(#area)"} d={d} className="area"></path>}</g> */}
+				<g>{d && <path opacity={isActive ? 0.5 : 0.3} fill={colorScale(option.key)} d={d} className="area"></path>}</g>
+				{this.renderDot()}
 			</React.Fragment>
 		)
 	}

@@ -57,8 +57,11 @@ export default class Chart extends Component {
 			chartData: null,
 			xScale: null,
 			yScale: null,
+			colorScale: null,
+
 			mouseCoordinate: null,
 			activeTickItem: null,
+			activeCharts:[],
 			wrapperStyle: {},
 		};
 	}
@@ -89,26 +92,30 @@ export default class Chart extends Component {
 	}
 
 	renderCharts = () => {
-		let { charts, xScale, yScale, chartData, wrapperStyle } = this.state;
+		let { charts, xScale, yScale, chartData, wrapperStyle, colorScale, activeTickItem, activeCharts } = this.state;
 
 		if (!chartData) {
 			return;
 		}
 
-		console.log(chartData)
+		// console.log(chartData);
 
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
-			return Chart && (
-				<Chart
-					key={index}
-					chartIndex={index}
-					color={color3}
-					data={chartData.data[item.data]}
-					xScale={xScale}
-					yScale={yScale}
-					wrapperStyle={wrapperStyle}
-				></Chart>
+			return (
+				Chart && (
+					<Chart
+						option={item}
+						key={index}
+						colorScale={colorScale}
+						data={chartData.data[item.key]}
+						xScale={xScale}
+						yScale={yScale}
+						wrapperStyle={wrapperStyle}
+						activeTickItem={activeTickItem}
+						isActive={activeCharts.indexOf(item.key) === -1 ? false : true}
+					></Chart>
+				)
 			);
 		});
 	};
@@ -143,6 +150,11 @@ export default class Chart extends Component {
 							wrapperStyle={wrapperStyle}
 						></NumberAxis>
 					);
+				case "Grid":
+					let Grid = Components.Grid;
+					return (
+						<Grid key={index} wrapperStyle={wrapperStyle} xScale={xScale} yScale={yScale}></Grid>
+					)
 				default:
 					return null;
 			}
@@ -150,15 +162,54 @@ export default class Chart extends Component {
 	};
 
 	renderTooltip = () => {
-		let { wrapperStyle, activeTickItem, components } = this.state;
+		let { wrapperStyle, activeTickItem, components, colorScale } = this.state;
 
 		if (!hasType(components, "Tooltip")) {
 			return null;
 		}
 
 		let Tooltip = Components.Tooltip;
-		return <Tooltip wrapperStyle={wrapperStyle} activeTickItem={activeTickItem}></Tooltip>;
+		return (
+			<Tooltip
+				wrapperStyle={wrapperStyle}
+				activeTickItem={activeTickItem}
+				colorScale={colorScale}
+			></Tooltip>
+		);
 	};
+
+	renderLegend = () => {
+		let { components, colorScale, activeCharts } = this.state;
+
+		let legendOption = hasType(components, "Legend")
+		if (!legendOption) {
+			return null;
+		}
+
+		let Legend = Components.Legend;
+		return (
+			<Legend
+				activeCharts={activeCharts}
+				setActiveCharts={this.setActiveCharts}
+				option={legendOption}
+				colorScale={colorScale}
+			></Legend>
+		);
+	};
+
+	setActiveCharts = (chartKey)=>{
+		let {activeCharts} = this.state;
+		if(activeCharts.indexOf(chartKey) !== -1){
+			activeCharts.splice(activeCharts.indexOf(chartKey), 1)
+		}else{
+			activeCharts.push(chartKey)
+		}
+
+		this.setState({
+			activeCharts
+		})
+	}
+
 
 	handleOnClick = event => {
 		event.persist();
@@ -201,14 +252,15 @@ export default class Chart extends Component {
 
 	getActiveTickItem = () => {
 		if (this.inRange()) {
-			let { xScale, yScale, mouseCoordinate, chartData } = this.state;
-			let activeIndex = getActiveIndex(mouseCoordinate.chartX, xScale.ticks());
+			let { xScale, yScale, mouseCoordinate, chartData, charts } = this.state;
+			let activeIndex = getActiveIndex(mouseCoordinate.chartX, xScale.ticksValue());
 			let activeTick = chartData.domain[activeIndex];
 
-			let activeData = Object.keys(chartData.range).map(item => {
+			let activeData = Object.keys(chartData.range).map((item, index) => {
 				return {
 					key: item,
 					value: chartData.range[item][activeIndex],
+					name: charts[index].name,
 				};
 			});
 
@@ -247,19 +299,22 @@ export default class Chart extends Component {
 		const { width = 800, height = 500 } = this.props.option;
 
 		return (
-			<div
-				className="chart-wrapper"
-				onClick={this.handleOnClick}
-				onMouseLeave={this.handleOnMouseOut}
-				onMouseMove={this.handleOnMouseMove}
-				ref={this.container}
-			>
-				{this.renderTooltip()}
-				{/* <Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip> */}
-				<svg width={width} height={height}>
-					{this.renderCharts()}
-					{this.renderComponents()}
-				</svg>
+			<div className="view-box">
+				{this.renderLegend()}
+				<div
+					className="chart-wrapper"
+					onClick={this.handleOnClick}
+					onMouseLeave={this.handleOnMouseOut}
+					onMouseMove={this.handleOnMouseMove}
+					ref={this.container}
+				>
+					{this.renderTooltip()}
+					{/* <Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip> */}
+					<svg width={width} height={height}>
+						{this.renderComponents()}
+						{this.renderCharts()}
+					</svg>
+				</div>
 			</div>
 		);
 	}

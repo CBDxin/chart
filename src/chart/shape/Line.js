@@ -35,7 +35,8 @@ class Line extends Component {
 
 	render() {
 		const { d } = this.state;
-		return <g>{d && <path d={d} className="line" fill="none" stroke = "#000" strokeWidth="1px"></path>}</g>;
+		const { color } = this.props
+		return <g>{d && <path d={d} className="line" fill="none" stroke = {color || "#000"} strokeWidth="1px"></path>}</g>;
 	}
 }
 

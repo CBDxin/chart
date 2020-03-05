@@ -1,5 +1,6 @@
 import Charts from "../charts";
 import Components from "../components";
+import { color3 } from "../util/color";
 
 
 export let getStateByOption = option => {
@@ -10,27 +11,16 @@ export let getStateByOption = option => {
 		padding: option.padding || 50,
 	};
 	let scaleMap = createScale(chartData, wrapperStyle);
+	let colorScale = createColorScale(option.charts);
 
 	return {
 		chartData,
 		wrapperStyle,
 		charts:option.charts,
 		components:option.components,
+		colorScale,
 		...scaleMap
 	}
-
-	// if (option.charts) {
-	// 	option.charts.map(chart => {
-	// 		model.charts.push(chartRegister(chart, chartData));
-	// 	});
-	// }
-
-	// if (option.components) {
-	// 	option.components.map(component => {
-	// 		model.components.push(componentRegister(component));
-	// 	});
-	// }
-
 };
 
 let formaDataSet = dataSet => {
@@ -74,17 +64,17 @@ let createScale = (chartData, wrapperStyle) => {
 	};
 };
 
-// let chartRegister = (chart, chartData) => {
-// 	let ChartItem = charts[chart];
-// };
+let createColorScale = (charts)=>{
+	let chartKeys = charts.map(item=>item.key)
+	return Components.scale(chartKeys, color3, "ordinal")
+}
 
-// let componentRegister = (component , chartData) => {};
 
 export let hasType = (container, type)=>{
 	let result = false;
 	container.some(item=>{
 		if(item.type === type){
-			result = true;
+			result = item.option || true;
 			return true;
 		}
 	})

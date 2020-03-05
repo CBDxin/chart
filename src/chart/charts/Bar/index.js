@@ -22,7 +22,7 @@ class Bar extends BaseShape {
 	// }
 
 	createRects = props => {
-		let { data, xScale, yScale, wrapperStyle, chartIndex, color } = props || this.props;
+		let { data, xScale, yScale, wrapperStyle, option, colorScale, activeTickItem, isActive } = props || this.props;
 		let bandWidth = xScale.bandwidth();
 		let width = bandWidth * WIDTH;
 
@@ -34,7 +34,8 @@ class Bar extends BaseShape {
 					y={yScale(item.range)}
 					height={wrapperStyle.height - wrapperStyle.padding - yScale(item.range)}
 					width={width}
-					fill={color[chartIndex]}
+					opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
+					fill={colorScale(option.key)}
 				></rect>
 			);
 		});

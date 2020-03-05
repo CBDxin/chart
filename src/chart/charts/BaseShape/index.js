@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import {scale} from "../../components/Scale";
 
 const mockData = {
@@ -18,7 +18,25 @@ class Bar extends Component {
     };
     this.mockData = mockData;
     this.scale = scale;
-	}
+  }
+  
+  renderDot = (props)=>{
+    let { data, xScale, yScale, option, colorScale, activeTickItem, isActive } = props || this.props;
+
+		return data.map((item, index) => {
+			return (
+				<circle
+					key={index}
+					cx={xScale(item.domain)}
+					cy={yScale(item.range)}
+          r={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 5 : 3}
+          stroke={colorScale(option.key)}
+          fill={ "#fff" }
+				></circle>
+			);
+		});
+  }
+  
 }
 
 export default Bar;

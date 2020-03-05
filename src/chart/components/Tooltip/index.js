@@ -32,11 +32,11 @@ class Tooltip extends Component {
 		this.getBoxStyle(nextProps);
 	}
 
-	getTranslate = (x, boxLength, wrapperLength) => {
-		if (x + boxLength < wrapperLength) {
-			return x;
+	getTranslate = (x, boxLength, wrapperLength, padding = 20) => {
+		if (x + boxLength + 2 * padding < wrapperLength) {
+			return x + padding;
 		} else {
-			return x - boxLength;
+			return x - boxLength - padding;
 		}
 	};
 
@@ -76,14 +76,15 @@ class Tooltip extends Component {
 	};
 
 	renderContent = () => {
-		let { activeTickItem } = this.props;
+    let { activeTickItem, colorScale } = this.props;
 
 		return (
 			<React.Fragment>
 				<div className="activeTick toptip-list">{activeTickItem.activeTick}</div>
 				{activeTickItem.activeData.map((item, index) => (
 					<div className="toptip-list" key={index}>
-						{item.key}:{item.value}
+            <span className="color-label" style={{background:colorScale(item.key)}}></span>
+						{item.name}:{item.value}
 					</div>
 				))}
 			</React.Fragment>

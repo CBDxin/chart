@@ -1,17 +1,19 @@
-import { scaleLinear, scaleBand } from "d3";
+import { scaleLinear, scaleBand, scaleOrdinal } from "d3";
 
 export let scale = (domain, range, type) => {
-	let bandWidth, scale, invert = {};
+	let bandWidth,
+		scale,
+		invert = {};
 	switch (type) {
+		case "ordinal":
+			scale = scaleOrdinal()
+				.domain(domain)
+				.range(range);
+			break;
 		case "bandNormal":
-			scale = scaleBand().domain(domain).range(range);
-			scale.ticks = () => {
-				return domain.map(item => {
-					invert[scale(item)] = item;
-					return scale(item);
-				});
-			};
-			scale.invert = x => invert[x];
+			scale = scaleBand()
+				.domain(domain)
+				.range(range);
 			break;
 		case "band":
 			bandWidth = (range[1] - range[0]) / (domain.length - 1);
@@ -19,13 +21,6 @@ export let scale = (domain, range, type) => {
 			scale = scaleBand()
 				.domain(domain)
 				.range(range);
-			scale.ticks = () => {
-				return domain.map(item => {
-					invert[scale(item)] = item;
-					return scale(item);
-				});
-			};
-			scale.invert = x => invert[x];
 			break;
 		case "bandWithPadding":
 			bandWidth = (range[1] - range[0]) / domain.length;
@@ -33,19 +28,28 @@ export let scale = (domain, range, type) => {
 			scale = scaleBand()
 				.domain(domain)
 				.range(range);
-			scale.ticks = () => {
-				return domain.map(item => {
-					invert[scale(item)] = item;
-					return scale(item);
-				});
-			};
-			scale.invert = x => invert[x];
 			break;
 		case "linear":
 		default:
 			scale = scaleLinear()
 				.domain(domain)
 				.range(range);
+
+			scale.ticksValue = ()=>{
+				return scale.ticks().map(item=>scale(item))
+			}
+
+			console.log(scale.ticks())
 	}
+
+	scale.ticksValue = scale.ticksValue || function(){
+		return domain.map(item => {
+			invert[scale(item)] = item;
+			return scale(item);
+		});
+	};
+
+	scale.invert = scale.invert || function(x){ return invert[x]; }
+
 	return scale;
 };

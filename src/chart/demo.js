@@ -11,7 +11,7 @@ let option = {
 			huaWei: [500, 700, 600, 200, 900, 500],
 			oppo: [100, 500, 20, 300, 700, 500],
 			vivo: [700, 200, 900, 120, 1200, 300],
-			iphone: [800, 600, 900, 1500, 300, 500]
+			iphone: [800, 600, 900, 1500, 300, 700]
 		},
 	},
 	components: [
@@ -26,32 +26,41 @@ let option = {
 		{
 			type: "Tooltip",
 		},
+		{
+			type:"Legend",
+			option:{
+				dataItems:["xiaoMi", "huaWei", "oppo", "vivo", "iphone"]
+			}
+		},
+		{
+			type:"Grid"
+		}
 	],
 	charts: [
 		{
 			type: "Area",
 			name: "小米",
-			data: "xiaoMi",
+			key: "xiaoMi",
 		},
 		{
-			type: "Area",
+			type: "Scatter",
 			name: "华为",
-			data: "huaWei",
+			key: "huaWei",
 		},
 		{
 			type: "Area",
 			name: "oppo",
-			data: "oppo",
+			key: "oppo",
 		},
 		{
-			type: "Area",
+			type: "Bar",
 			name: "vivo",
-			data: "vivo",
+			key: "vivo",
 		},
 		{
-			type: "Area",
+			type: "Line",
 			name: "苹果",
-			data: "iphone",
+			key: "iphone",
 		},
 	],
 };
@@ -79,7 +88,7 @@ let option1 = {
 		{
 			type: "Pie",
 			name: "小米",
-			data: "xiaoMi",
+			key: "xiaoMi",
 		}
 	],
 };
@@ -96,6 +105,7 @@ class Demo extends Component {
 			<div>
 				<Chart option={option}></Chart>
 				<Chart option={option1}></Chart>
+				<div ></div>
 			</div>
 		);
 	}

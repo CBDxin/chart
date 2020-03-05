@@ -21,7 +21,7 @@ class Scatter extends BaseShape {
 	// }
 
 	createCircles = props => {
-		let { data, xScale, yScale, chartIndex, color } = props || this.props;
+		let { data, xScale, yScale, option,colorScale, activeTickItem, isActive } = props || this.props;
 		let bandWidth = xScale.bandwidth();
 		let defaultWidth = bandWidth * WIDTH;
 
@@ -32,7 +32,8 @@ class Scatter extends BaseShape {
 					cx={xScale(item.domain)}
 					cy={yScale(item.range)}
           r={defaultWidth}
-          fill={color[chartIndex]}
+          opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
+          fill={colorScale(option.key)}
 				></circle>
 			);
 		});

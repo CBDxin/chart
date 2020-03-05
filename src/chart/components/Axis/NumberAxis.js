@@ -45,7 +45,7 @@ class NumberAxis extends BaseAxis {
 
 	getTickItems = (props) => {
     const { scale } = props || this.props;
-    let ticksData = scale.ticks();
+		let ticksData = scale.ticks();
 
 		let tickItems = ticksData.map(tickData => {
 			let tick = scale(tickData);
