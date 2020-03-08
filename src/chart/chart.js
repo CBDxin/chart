@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 
-import { getActiveIndex } from "./util/mathUtils";
-import { color3 } from "./util/color";
-
-import { getMouseInfo } from "./EvenHandler";
+import { getActiveIndex, getMouseInfo } from "./EvenHandler";
 import { getStateByOption, hasType } from "./optionManger";
 
-import Charts from "./charts";
+import Charts from "./container";
 import Components from "./components";
 
 import "./index.less";
@@ -81,7 +78,7 @@ export default class Chart extends Component {
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { option } = this.nextProps;
+		const { option } = nextProps;
 
 		this.setState({
 			...this.state,

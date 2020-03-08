@@ -4,33 +4,40 @@ import BaseShape from "../BaseShape";
 const WIDTH = 0.1;
 
 class Scatter extends BaseShape {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		d: "",
-	// 	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			d: "",
+			preData: null,
+			data: null,
+		};
+	}
 
-	// }
+	componentDidMount = () => {
+		this.renderWithAnimation();
+	};
 
-	// componentDidMount = () => {
-	//   this.createPath()
-	// };
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.setState(
+			{
+				preData: this.state.data,
+			},
+			this.renderWithAnimation(nextProps)
+		);
+	}
 
-	// UNSAFE_componentWillReceiveProps(nextProps){
-	// 	this.createPath(nextProps);
-	// }
-
-	createCircles = props => {
-		let { data, xScale, yScale, option,colorScale, activeTickItem, isActive } = props || this.props;
+	renderScatter = () => {
+    let {xScale, option,colorScale, activeTickItem, isActive } = this.props;
+    let {data} = this.state;
 		let bandWidth = xScale.bandwidth();
 		let defaultWidth = bandWidth * WIDTH;
 
-		return data.map((item, index) => {
+		return data && data.map((item, index) => {
 			return (
 				<circle
 					key={index}
-					cx={xScale(item.domain)}
-					cy={yScale(item.range)}
+					cx={item.x}
+					cy={item.y}
           r={defaultWidth}
           opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
           fill={colorScale(option.key)}
@@ -40,7 +47,7 @@ class Scatter extends BaseShape {
 	};
 
 	render() {
-		return <g>{this.createCircles()}</g>;
+		return <g>{this.renderScatter()}</g>;
 	}
 }
 

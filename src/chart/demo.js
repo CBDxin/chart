@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Chart from "./chart";
 
+import { random } from "./util/mathUtils";
+
 let option = {
 	height:500,
 	width:800,
@@ -64,48 +66,66 @@ let option = {
 		},
 	],
 };
-let option1 = {
-	height:500,
-	width:800,
-	dataSet: {
-		domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
-		range:{
-			xiaoMi: [300, 900, 500, 600, 755, 200],
-			huaWei: [500, 700, 600, 200, 900, 500]
-		},
-	},
-	components: [
-		{
-			type: "xAxis",
-			position:"bottom"
-		},
-		{
-			type: "yAxis",
-			position:"left"
-		},
-	],
-	charts: [
-		{
-			type: "Pie",
-			name: "小米",
-			key: "xiaoMi",
-		}
-	],
-};
+
 
 
 
 class Demo extends Component {
 	constructor(props) {
 		super(props);
+		this.state={
+			option:{
+				height:500,
+				width:800,
+				dataSet: {
+					domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
+					range:{
+						xiaoMi: [300, 900, 500, 600, 755, 200],
+						// huaWei: [500, 700, 600, 200, 900, 500]
+					},
+				},
+				components: [
+					{
+						type: "xAxis",
+						position:"bottom"
+					},
+					{
+						type: "yAxis",
+						position:"left"
+					},
+					{
+						type:"Tooltip"
+					}
+				],
+				charts: [
+					{
+						type: "Scatter",
+						name: "小米",
+						key: "xiaoMi",
+					}
+				],
+			}
+		}
+	}
+
+	changeData = ()=>{
+		let {option} = this.state
+		option.dataSet.range.xiaoMi.map((item, index)=>{
+			option.dataSet.range.xiaoMi[index] = random(3)
+		})
+		
+		this.setState({
+			option
+		})
 	}
 
 	render() {
+		console.log(this.state.option)
 		return (
 			<div>
-				<Chart option={option}></Chart>
-				<Chart option={option1}></Chart>
-				<div ></div>
+				{/* <Chart option={option}></Chart> */}
+				<Chart option={this.state.option}></Chart>
+				<div onClick={this.changeData}>changeData</div>
 			</div>
 		);
 	}

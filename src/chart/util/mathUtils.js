@@ -1,27 +1,30 @@
+import { timer } from "d3";
+
 export function random(n) {
   if (n > 21) return null
-  return parseInt((Math.random() + 1) * Math.pow(10,n-1))
+  return parseInt((Math.random()) * Math.pow(10,n))
 }
 
-export function getActiveIndex(x, list){
-  let result;
-  list.sort((a, b)=>{
-    return a - b;
-  });
-  list.some((item, index)=>{
-    if(index === 0){
-      result = index
+/**
+ * 三阶贝塞尔曲线ease-in-out
+ * @param {number} k
+ */
+function easeInOutCubic(k) {
+  return (k *= 2) < 1 ? 0.5 * k * k * k : 0.5 * ((k -= 2) * k * k + 2);
+}
+
+let timeStamp;
+
+export let transition = (animation, duration)=>{
+  timeStamp && timeStamp.stop();
+  timeStamp = timer((elapsed)=>{
+    let precent = elapsed / duration
+    if(precent > 1){
+      timeStamp.stop();
+      timeStamp = null;
     }else{
-      if(Math.abs(x - item) >= Math.abs(x - list[index - 1])){
-        result = index - 1;
-        return true;
-      }else{
-        result = index;
-        return false;
-      }
+      animation(precent)
     }
-    return false;
   })
-  return result;
 }
 

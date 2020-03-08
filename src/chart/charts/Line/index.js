@@ -7,45 +7,59 @@ class Line extends BaseShape {
 		super(props);
 		this.state = {
 			d: "",
+			preData: null,
+			data: null,
 		};
-
 	}
 
 	componentDidMount = () => {
-    this.createPath()
-  };
+		this.renderWithAnimation();
+	};
 
-  UNSAFE_componentWillReceiveProps(nextProps){
-		this.createPath(nextProps);
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.setState(
+			{
+				preData: this.state.data,
+			},
+			this.renderWithAnimation(nextProps)
+		);
 	}
-  
-  createPath = (props)=>{
-    let { data, xScale, yScale } = props || this.props;
-    let path = line()
+
+	renderLine = () => {
+		let { option, colorScale, isActive } = this.props;
+		let { data } = this.state;
+		let path = line()
 			.x(item => {
-				return xScale(item.domain);
+				return item.x;
 			})
 			.y(item => {
-				return yScale(item.range);
+				return item.y;
 			});
-			
-			// path.curve(curveCardinal);
 
-		this.setState({
-			d: path(data),
-		});
-  }
+		// path.curve(curveCardinal);
+
+		return (
+			<g>
+				{data && (
+					<path
+						d={path(data)}
+						className="line"
+						fill="none"
+						stroke={colorScale(option.key)}
+						strokeWidth={isActive ? "3px" : "2px"}
+					></path>
+				)}
+			</g>
+		);
+	};
 
 	render() {
-		const { d } = this.state;
-		const { option, colorScale, isActive } = this.props;
 		return (
 			<React.Fragment>
-				<g>{d && <path d={d} className="line" fill="none" stroke = {colorScale(option.key)} strokeWidth={isActive ? "3px" : "2px"}></path>}</g>
+				{this.renderLine()}
 				{this.renderDot()}
 			</React.Fragment>
-		)
-		
+		);
 	}
 }
 

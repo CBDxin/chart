@@ -1,38 +1,41 @@
 import React from "react";
 import BaseShape from "../BaseShape";
-import Rectangle from "../../shape/Rectangle";
 
 const WIDTH = 0.3;
 
 class Bar extends BaseShape {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		d: "",
-	// 	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			preData: null,
+			data: null
+		};
+	}
 
-	// }
+	componentWillMount(){
+		this.renderWithAnimation()
+	}
 
-	// componentDidMount = () => {
-	//   this.createPath()
-	// };
+	UNSAFE_componentWillReceiveProps(nextProps){
+		this.setState({
+			preData:this.state.data
+		}, this.renderWithAnimation(nextProps))
+	}
 
-	// UNSAFE_componentWillReceiveProps(nextProps){
-	// 	this.createPath(nextProps);
-	// }
+	createRects = () => {
+		let { xScale ,wrapperStyle, option, colorScale, activeTickItem, isActive } = this.props;
 
-	createRects = props => {
-		let { data, xScale, yScale, wrapperStyle, option, colorScale, activeTickItem, isActive } = props || this.props;
 		let bandWidth = xScale.bandwidth();
 		let width = bandWidth * WIDTH;
+		let { data } = this.state;
 
-		return data.map((item, index) => {
+		return data && data.map((item, index) => {
 			return (
 				<rect
 					key={index}
-					x={xScale(item.domain) - width / 2}
-					y={yScale(item.range)}
-					height={wrapperStyle.height - wrapperStyle.padding - yScale(item.range)}
+					x={item.x - width / 2}
+					y={item.y}
+					height={wrapperStyle.height - wrapperStyle.padding - item.y}
 					width={width}
 					opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
 					fill={colorScale(option.key)}

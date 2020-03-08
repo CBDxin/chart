@@ -9,46 +9,59 @@ class Area extends BaseShape {
 		super(props);
 		this.state = {
 			d: "",
+			preData: null,
+			data: null,
 		};
 	}
 
 	componentDidMount = () => {
-		this.createPath();
+		this.renderWithAnimation();
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.createPath(nextProps);
+		this.setState(
+			{
+				preData: this.state.data,
+			},
+			this.renderWithAnimation(nextProps)
+		);
 	}
 
-	createPath = props => {
-		let { data, xScale, yScale } = props || this.props;
+	renderArea = () => {
+		let { wrapperStyle, colorScale, option, isActive } = this.props;
+		let { data } = this.state;
 		let path = area()
 			.x(item => {
-				return xScale(item.domain);
+				return item.x;
 			})
 			.y1(item => {
-				return yScale(item.range);
+				return item.y;
 			})
-			.y0(450);
+			.y0(wrapperStyle.height - wrapperStyle.padding);
 
-		path.curve(curveCardinal)
+		path.curve(curveCardinal);
 
-		this.setState({
-			d: path(data),
-		});
+		return (
+			data && <g>
+				<path
+					opacity={isActive ? 0.5 : 0.3}
+					fill={colorScale(option.key)}
+					d={path(data)}
+					className="area"
+				></path>
+			</g>
+		);
 	};
 
 	render() {
-		const { d } = this.state;
-		const { colorScale, option, isActive } = this.props;
-		return(
+		return (
 			<React.Fragment>
 				{/* <LinearGradient id="area" colors={color}></LinearGradient> */}
 				{/* <g>{d && <path opacity={0.3}  fill={"url(#area)"} d={d} className="area"></path>}</g> */}
-				<g>{d && <path opacity={isActive ? 0.5 : 0.3} fill={colorScale(option.key)} d={d} className="area"></path>}</g>
+				{this.renderArea()}
 				{this.renderDot()}
 			</React.Fragment>
-		)
+		);
 	}
 }
 
