@@ -12,14 +12,15 @@ class BaseChart extends Component {
   }
   
   renderDot = (props)=>{
-    let { data, xScale, yScale, option, colorScale, activeTickItem, isActive } = props || this.props;
+		let { option, colorScale, activeTickItem, isActive } = props || this.props;
+		let {data} = this.state;
 
-		return data.map((item, index) => {
+		return data && data.map((item, index) => {
 			return (
 				<circle
 					key={index}
-					cx={xScale(item.domain)}
-					cy={yScale(item.range)}
+					cx={item.x}
+					cy={item.y}
           r={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 5 : 3}
           stroke={colorScale(option.key)}
           fill={ "#fff" }

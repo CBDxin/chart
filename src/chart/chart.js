@@ -312,7 +312,7 @@ export default class Chart extends Component {
 		const { width = 800, height = 500 } = this.props.option;
 
 		return (
-			<div className="view-box">
+			<div className="view-box" width={width} height={height}>
 				{this.renderLegend()}
 				<div
 					className="chart-wrapper"
