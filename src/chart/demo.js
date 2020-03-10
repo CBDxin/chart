@@ -7,13 +7,13 @@ let option = {
 	height:500,
 	width:800,
 	dataSet: {
-		domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
+		domain: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
 		range:{
-			xiaoMi: [300, 900, 500, 600, 755, 200],
-			huaWei: [500, 700, 600, 200, 900, 500],
-			oppo: [100, 500, 20, 300, 700, 500],
-			vivo: [700, 200, 900, 120, 1200, 300],
-			iphone: [800, 600, 900, 1500, 300, 700]
+			xiaoMi: [300, 900, 500, 600, 755, 200, 200, 200, 200, 200, 200, 200],
+			huaWei: [500, 700, 600, 200, 900, 500, 200, 200, 200, 200, 200, 200],
+			oppo: [100, 500, 20, 300, 700, 500, 200, 200, 200, 200, 200, 200],
+			vivo: [700, 200, 900, 120, 1200, 300, 200, 200, 200, 200, 200, 200],
+			iphone: [800, 600, 900, 1500, 300, 700, 200, 200, 200, 200, 200, 200]
 		},
 	},
 	components: [
@@ -40,12 +40,17 @@ let option = {
 	],
 	charts: [
 		{
+			type: "Line",
+			name: "苹果",
+			key: "iphone",
+		},
+		{
 			type: "Area",
 			name: "小米",
 			key: "xiaoMi",
 		},
 		{
-			type: "Scatter",
+			type: "Line",
 			name: "华为",
 			key: "huaWei",
 		},
@@ -59,11 +64,6 @@ let option = {
 			name: "vivo",
 			key: "vivo",
 		},
-		{
-			type: "Line",
-			name: "苹果",
-			key: "iphone",
-		},
 	],
 };
 
@@ -74,44 +74,16 @@ class Demo extends Component {
 	constructor(props) {
 		super(props);
 		this.state={
-			option:{
-				height:500,
-				width:800,
-				dataSet: {
-					domain: ["一月", "二月", "三月", "四月", "五月", "六月"],
-					range:{
-						xiaoMi: [300, 900, 500, 600, 755, 200],
-						// huaWei: [500, 700, 600, 200, 900, 500]
-					},
-				},
-				components: [
-					{
-						type: "xAxis",
-						position:"bottom"
-					},
-					{
-						type: "yAxis",
-						position:"left"
-					},
-					{
-						type:"Tooltip"
-					}
-				],
-				charts: [
-					{
-						type: "Scatter",
-						name: "小米",
-						key: "xiaoMi",
-					}
-				],
-			}
+			option:option
 		}
 	}
 
 	changeData = ()=>{
 		let {option} = this.state
-		option.dataSet.range.xiaoMi.map((item, index)=>{
-			option.dataSet.range.xiaoMi[index] = random(3)
+		Object.keys(option.dataSet.range).map(rangeitem=>{
+			option.dataSet.range[rangeitem].map((item, index)=>{
+				option.dataSet.range[rangeitem][index] = random(3)
+			})
 		})
 		
 		this.setState({
@@ -119,8 +91,13 @@ class Demo extends Component {
 		})
 	}
 
+	componentDidMount(){
+		// setInterval(this.changeData, 500)
+	}
+
+
 	render() {
-		console.log(this.state.option)
+		// console.log(this.state.option)
 		return (
 			<div>
 				{/* <Chart option={option}></Chart> */}

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import {scale} from "../../components/Scale";
 
-import { transition } from "../../util/mathUtils";
-import { interpolateNumber } from "d3";
+import { interpolateNumber, timer } from "d3";
 
 
 class BaseChart extends Component {
@@ -30,15 +28,29 @@ class BaseChart extends Component {
 		});
   }
 
+  transition = (animation, duration)=>{
+    this.timeStamp && this.timeStamp.stop();
+    this.timeStamp = timer((elapsed)=>{
+      let precent = elapsed / duration
+      animation(precent)
+      if(precent > 1){
+        this.timeStamp.stop();
+        this.timeStamp = null;
+      }
+    })
+  }
+
   renderWithAnimation = props => {
-		transition(precent => {
+		this.transition(precent => {
 			this.animation(precent, props || this.props);
-		}, 300);
+    }, 300);
 	};
 
 	animation = (precent, props) => {
 		let { data } = props;
-		let { preData } = this.state;
+    let { preData } = this.state;
+    
+    if(precent > 1){precent = 1}
 
 		let nextData = data.map((item, index) => {
 			const interpolatorY = interpolateNumber(preData ? preData[index].y : 0, item.y);
@@ -47,7 +59,9 @@ class BaseChart extends Component {
 				x: interpolatorX(precent),
 				y: interpolatorY(precent),
 			};
-		});
+    });
+    
+    // console.log(this.props.option.key)
 
 		this.setState({
 			data: nextData,

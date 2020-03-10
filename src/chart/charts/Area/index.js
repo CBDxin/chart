@@ -8,7 +8,6 @@ class Area extends BaseShape {
 	constructor(props) {
 		super(props);
 		this.state = {
-			d: "",
 			preData: null,
 			data: null,
 		};
@@ -30,6 +29,9 @@ class Area extends BaseShape {
 	renderArea = () => {
 		let { wrapperStyle, colorScale, option, isActive } = this.props;
 		let { data } = this.state;
+
+		// console.log(data)
+
 		let path = area()
 			.x(item => {
 				return item.x;

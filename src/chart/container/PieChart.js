@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Area from "../charts/Area";
+import Pie from "../charts/Pie";
+import { pie } from "d3";
 
-class AreaChart extends Component{
+class PieChart extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -18,11 +19,10 @@ class AreaChart extends Component{
   }
 
   formatData = (props)=>{
-    let { data, xScale, yScale } = props || this.props;
-    let formatedData = data.map(item=>({
-      x:xScale(item.domain),
-      y:yScale(item.range)
-    }))
+    let { data } = props || this.props;
+
+    let pieCreator = pie().value(d => d.range).sort((a, b)=>b);
+		let formatedData = pieCreator(data);
     
     this.setState({
       data:formatedData
@@ -30,9 +30,8 @@ class AreaChart extends Component{
   }
 
   render(){
-    // console.log(this.state.data)
-    return <Area {...this.props} data={this.state.data}></Area>
+    return <Pie {...this.props} data={this.state.data}></Pie>
   }
 }
 
-export default AreaChart;
+export default PieChart;

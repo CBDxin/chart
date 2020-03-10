@@ -58,7 +58,7 @@ export default class Chart extends Component {
 
 			mouseCoordinate: null,
 			activeTickItem: null,
-			activeCharts:[],
+			activeCharts: [],
 			wrapperStyle: {},
 		};
 	}
@@ -89,7 +89,16 @@ export default class Chart extends Component {
 	}
 
 	renderCharts = () => {
-		let { charts, xScale, yScale, chartData, wrapperStyle, colorScale, activeTickItem, activeCharts } = this.state;
+		let {
+			charts,
+			xScale,
+			yScale,
+			chartData,
+			wrapperStyle,
+			colorScale,
+			activeTickItem,
+			activeCharts,
+		} = this.state;
 
 		if (!chartData) {
 			return;
@@ -99,6 +108,9 @@ export default class Chart extends Component {
 
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
+
+			// console.log(chartData.data[item.key])
+
 			return (
 				Chart && (
 					<Chart
@@ -151,7 +163,7 @@ export default class Chart extends Component {
 					let Grid = Components.Grid;
 					return (
 						<Grid key={index} wrapperStyle={wrapperStyle} xScale={xScale} yScale={yScale}></Grid>
-					)
+					);
 				default:
 					return null;
 			}
@@ -178,7 +190,7 @@ export default class Chart extends Component {
 	renderLegend = () => {
 		let { components, colorScale, activeCharts } = this.state;
 
-		let legendOption = hasType(components, "Legend")
+		let legendOption = hasType(components, "Legend");
 		if (!legendOption) {
 			return null;
 		}
@@ -194,19 +206,18 @@ export default class Chart extends Component {
 		);
 	};
 
-	setActiveCharts = (chartKey)=>{
-		let {activeCharts} = this.state;
-		if(activeCharts.indexOf(chartKey) !== -1){
-			activeCharts.splice(activeCharts.indexOf(chartKey), 1)
-		}else{
-			activeCharts.push(chartKey)
+	setActiveCharts = chartKey => {
+		let { activeCharts } = this.state;
+		if (activeCharts.indexOf(chartKey) !== -1) {
+			activeCharts.splice(activeCharts.indexOf(chartKey), 1);
+		} else {
+			activeCharts.push(chartKey);
 		}
 
 		this.setState({
-			activeCharts
-		})
-	}
-
+			activeCharts,
+		});
+	};
 
 	handleOnClick = event => {
 		event.persist();
@@ -253,13 +264,18 @@ export default class Chart extends Component {
 			let activeIndex = getActiveIndex(mouseCoordinate.chartX, xScale.ticksValue());
 			let activeTick = chartData.domain[activeIndex];
 
-			let activeData = Object.keys(chartData.range).map((item, index) => {
-				return {
-					key: item,
-					value: chartData.range[item][activeIndex],
-					name: charts[index].name,
-				};
+			let activeData = [];
+			Object.keys(chartData.range).filter((item, index) => {
+				if (charts[index]) {
+					activeData[index] = {
+						key: item,
+						value: chartData.range[item][activeIndex],
+						name: charts[index].name,
+					};
+				}
 			});
+
+			// console.log(activeData);
 
 			let activeTickPostion = xScale(activeTick);
 			this.setState({
