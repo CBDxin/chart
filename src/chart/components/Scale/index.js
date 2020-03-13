@@ -39,7 +39,7 @@ export let scale = (domain, range, type) => {
 				return scale.ticks().map(item=>scale(item))
 			}
 
-			console.log(scale.ticks())
+			// console.log(scale.ticks())
 	}
 
 	scale.ticksValue = scale.ticksValue || function(){

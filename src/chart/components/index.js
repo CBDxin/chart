@@ -4,6 +4,7 @@ import {scale} from "./Scale";
 import Tooltip from "./Tooltip";
 import Legend from "./Legend";
 import Grid from "./Grid";
+import Brush from "./Brush"
 
 export default {
   CategoryAxis,
@@ -11,5 +12,6 @@ export default {
   scale,
   Tooltip,
   Legend,
-  Grid
+  Grid,
+  Brush
 }

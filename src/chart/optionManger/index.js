@@ -3,8 +3,8 @@ import Components from "../components";
 import { color3 } from "../util/color";
 
 
-export let getStateByOption = option => {
-	let chartData = formaDataSet(option.dataSet);
+export let getStateByOption = (option, brushIndexs) => {
+	let chartData = formaDataSet(option.dataSet, brushIndexs);
 	let wrapperStyle = {
 		height: option.height || 500,
 		width: option.width || 800,
@@ -23,23 +23,37 @@ export let getStateByOption = option => {
 	}
 };
 
-let formaDataSet = dataSet => {
+let formaDataSet =  (dataSet, brushIndexs) => {
 	let data = {
-		...dataSet,
+		domain:[],
+		range:[],
 		data: [],
 	};
 
-	Object.keys(dataSet.range).map(rangeItem => {
+	if(brushIndexs){
+		data.domain = dataSet.domain.slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
+		Object.keys(dataSet.range).map(item=>{
+			data.range[item] = dataSet.range[item].slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
+			console.log(dataSet)
+		})
+	}else{
+		data.domain = dataSet.domain
+		data.range = dataSet.range
+	}
+
+	Object.keys(data.range).map((rangeItem, index) => {
 		data.data[rangeItem] = [] 
 		data.domain.map((item, index) => {
 			let t = {
-				domain: dataSet.domain[index],
-				range:dataSet.range[rangeItem][index]
+				domain: data.domain[index],
+				range:data.range[rangeItem][index]
 			};
 	
 			data.data[rangeItem].push(t);
 		});
 	});
+
+	console.log(data)
 
 	return data;
 };
@@ -52,7 +66,7 @@ let createScale = (chartData, wrapperStyle) => {
 		rangeData = [...rangeData, ...chartData.range[rangeItem]]
 	});
 
-	let xScale = Components.scale(chartData.domain, [padding, width - padding], "bandWithPadding");
+	let xScale = Components.scale(chartData.domain, [padding, width - padding], "band");
 	let yScale = Components.scale(
 		[0, Math.max(...rangeData) * 1.2],
 		[height - padding, padding]

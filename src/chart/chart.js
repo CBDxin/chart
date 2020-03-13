@@ -88,6 +88,14 @@ export default class Chart extends Component {
 		console.log("------receiveprops");
 	}
 
+	updateBrushIndex = (brushIndexs)=>{
+		let {option} = this.props;
+		this.setState({
+			...this.state,
+			...getStateByOption(option, brushIndexs),
+		});
+	}
+
 	renderCharts = () => {
 		let {
 			charts,
@@ -186,6 +194,23 @@ export default class Chart extends Component {
 			></Tooltip>
 		);
 	};
+
+	renderBrush = () => {
+		let {wrapperStyle, components} = this.state;
+		let {option} = this.props;
+		if(!hasType(components, "Brush")){
+			return null;
+		}
+
+		let Brush = Components.Brush;
+		return (
+			<Brush
+				domain={option.dataSet.domain}
+				wrapperStyle={wrapperStyle}
+				updateBrushIndex={this.updateBrushIndex}
+			></Brush>
+		)
+	}
 
 	renderLegend = () => {
 		let { components, colorScale, activeCharts } = this.state;
@@ -326,6 +351,7 @@ export default class Chart extends Component {
 					<svg width={width} height={height}>
 						{this.renderComponents()}
 						{this.renderCharts()}
+						{this.renderBrush()}
 					</svg>
 				</div>
 			</div>
