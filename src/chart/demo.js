@@ -31,9 +31,9 @@ let option = {
 			type: "yAxis",
 			position:"left"
 		},
-		// {
-		// 	type: "Tooltip",
-		// },
+		{
+			type: "Tooltip",
+		},
 		{
 			type:"Legend",
 			option:{

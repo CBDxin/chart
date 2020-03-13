@@ -100,6 +100,7 @@ class Brush extends Component {
 	handleClickSlider = (event, type) => {
     event.persist();
     
+    this.props.changeBrushState(true);
     console.log(type)
 
 		this.setState(
@@ -178,7 +179,9 @@ class Brush extends Component {
 	};
 
 	onMoseUp = event => {
-		console.log("onmouseup");
+    console.log("onmouseup");
+    
+    this.props.changeBrushState(false);
 
 		window.removeEventListener("mousemove", this.onMoseMove);
 		window.removeEventListener("mouseup", this.onMoseUp);

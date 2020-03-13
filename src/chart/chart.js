@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { debounce } from "lodash";
+
 import { getActiveIndex, getMouseInfo } from "./EvenHandler";
 import { getStateByOption, hasType } from "./optionManger";
 
@@ -56,7 +58,8 @@ export default class Chart extends Component {
 			yScale: null,
 			colorScale: null,
 
-			brushIndexs:null,
+			brushIndexs: null,
+			brushing:false,
 
 			mouseCoordinate: null,
 			activeTickItem: null,
@@ -67,7 +70,7 @@ export default class Chart extends Component {
 
 	componentWillMount = () => {
 		const { option } = this.props;
-		const {brushIndexs} = this.state;
+		const { brushIndexs } = this.state;
 
 		this.setState(
 			{
@@ -82,7 +85,7 @@ export default class Chart extends Component {
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
 		const { option } = nextProps;
-		const {brushIndexs} = this.state;
+		const { brushIndexs } = this.state;
 
 		this.setState({
 			...this.state,
@@ -90,15 +93,6 @@ export default class Chart extends Component {
 		});
 
 		console.log("------receiveprops");
-	}
-
-	updateBrushIndex = (brushIndexs)=>{
-		let {option} = this.props;
-		this.setState({
-			...this.state,
-			...getStateByOption(option, brushIndexs),
-			brushIndexs:brushIndexs
-		});
 	}
 
 	renderCharts = () => {
@@ -200,11 +194,26 @@ export default class Chart extends Component {
 		);
 	};
 
+	updateBrushIndex = brushIndexs => {
+		let { option } = this.props;
+		this.setState({
+			...this.state,
+			...getStateByOption(option, brushIndexs),
+			brushIndexs: brushIndexs,
+		});
+	};
+
+	changeBrushState = (brushing)=>{
+		this.setState({
+			brushing
+		})
+	}
+
 	renderBrush = () => {
-		let {wrapperStyle, components} = this.state;
-		let {option} = this.props;
-		let brushOption = hasType(components, "Brush")
-		if(!brushOption){
+		let { wrapperStyle, components } = this.state;
+		let { option } = this.props;
+		let brushOption = hasType(components, "Brush");
+		if (!brushOption) {
 			return null;
 		}
 
@@ -215,9 +224,10 @@ export default class Chart extends Component {
 				domain={option.dataSet.domain}
 				wrapperStyle={wrapperStyle}
 				updateBrushIndex={this.updateBrushIndex}
+				changeBrushState={this.changeBrushState}
 			></Brush>
-		)
-	}
+		);
+	};
 
 	renderLegend = () => {
 		let { components, colorScale, activeCharts } = this.state;
@@ -260,10 +270,12 @@ export default class Chart extends Component {
 	};
 
 	handleOnMouseMove = event => {
-		let { components } = this.state;
-		if (!hasType(components, "Tooltip")) {
+		let { components, brushing } = this.state;
+		if (!hasType(components, "Tooltip") || brushing) {
 			return null;
 		}
+
+		console.log('-------chartMouseMove')
 
 		event.persist();
 		let mouseCoordinate = getMouseInfo(event, this.container);
@@ -290,7 +302,7 @@ export default class Chart extends Component {
 		console.log("----mouseout");
 	};
 
-	getActiveTickItem = () => {
+	getActiveTickItem = debounce(() => {
 		if (this.inRange()) {
 			let { xScale, yScale, mouseCoordinate, chartData, charts } = this.state;
 			let activeIndex = getActiveIndex(mouseCoordinate.chartX, xScale.ticksValue());
@@ -307,7 +319,7 @@ export default class Chart extends Component {
 				}
 			});
 
-			// console.log(activeData);
+			console.log('------activeData',activeData);
 
 			let activeTickPostion = xScale(activeTick);
 			this.setState({
@@ -325,14 +337,22 @@ export default class Chart extends Component {
 			});
 			console.log("---outrange");
 		}
-	};
+	}, 100);
 
 	inRange = () => {
-		let { mouseCoordinate, width, height, padding } = this.state;
+		let { mouseCoordinate, wrapperStyle } = this.state;
+		let { width, height, padding } = wrapperStyle;
 		let x = mouseCoordinate.chartX;
 		let y = mouseCoordinate.chartY;
 
-		if (x && x < width - padding.right && x > padding.left && y && y < height - padding.bottom && y > padding.top) {
+		if (
+			x &&
+			x < width - padding.right &&
+			x > padding.left &&
+			y &&
+			y < height - padding.bottom &&
+			y > padding.top
+		) {
 			return true;
 		} else {
 			return false;

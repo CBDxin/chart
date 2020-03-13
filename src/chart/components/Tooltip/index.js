@@ -34,8 +34,10 @@ class Tooltip extends Component {
 
 	getTranslate = (x, boxLength, wrapperLength, padding = 20) => {
 		if (x + boxLength + 2 * padding < wrapperLength) {
+			console.log(x,padding,x + padding)
 			return x + padding;
 		} else {
+			console.log(x,padding,x - boxLength - padding)
 			return x - boxLength - padding;
 		}
 	};
@@ -65,6 +67,12 @@ class Tooltip extends Component {
 			this.box.current.clientHeight,
 			wrapperStyle.height - wrapperStyle.padding.bottom
 		);
+
+		console.log(
+			activeTickItem.activeTickPostion,
+			this.box.current.clientWidth,
+			wrapperStyle.width - wrapperStyle.padding.right 
+    )
 
 		this.setState({
 			boxStyle: {
