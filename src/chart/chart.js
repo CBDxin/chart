@@ -203,13 +203,15 @@ export default class Chart extends Component {
 	renderBrush = () => {
 		let {wrapperStyle, components} = this.state;
 		let {option} = this.props;
-		if(!hasType(components, "Brush")){
+		let brushOption = hasType(components, "Brush")
+		if(!brushOption){
 			return null;
 		}
 
 		let Brush = Components.Brush;
 		return (
 			<Brush
+				option={brushOption}
 				domain={option.dataSet.domain}
 				wrapperStyle={wrapperStyle}
 				updateBrushIndex={this.updateBrushIndex}

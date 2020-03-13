@@ -14,7 +14,16 @@ class Brush extends Component {
   }
 
   componentWillMount(){
-    this.getBrushScale();
+    this.getBrushScale(this.props, ()=>{
+      let {startIndex, endIndex} = this.props.option;
+      let { brushScale } = this.state;
+      if(startIndex && endIndex){
+        this.setState({
+          x0OfSlider:brushScale.invertExtent(startIndex)[0],
+          x1OfSlider:brushScale.invertExtent(endIndex)[0]
+        }, this.updateBrushIndex)
+      }
+    });
   }
 
   componentDidMount(){
@@ -25,12 +34,12 @@ class Brush extends Component {
     this.getBrushScale(nextProps);
   }
   
-  getBrushScale = (props)=>{
+  getBrushScale = (props, cb)=>{
     let {domain, wrapperStyle} = props || this.props;
     let brushRange = Array.from({length:domain.length}, (v,k) => k);
     this.setState({
       brushScale:scaleQuantize([wrapperStyle.padding.left, wrapperStyle.width - wrapperStyle.padding.right], brushRange)
-    })
+    }, cb)
   }
 
 	renderSlider = () => {
@@ -81,10 +90,7 @@ class Brush extends Component {
   
   updateBrushIndex = ()=>{
     let {x0OfSlider, x1OfSlider, brushScale} = this.state;
-    console.log({
-      startIndex:Math.min(brushScale(x0OfSlider), brushScale(x1OfSlider)),
-      endIndex:Math.max(brushScale(x0OfSlider), brushScale(x1OfSlider))
-    })
+    // console.log(brushScale.invertExtent(1))
     this.props.updateBrushIndex({
       startIndex:Math.min(brushScale(x0OfSlider), brushScale(x1OfSlider)),
       endIndex:Math.max(brushScale(x0OfSlider), brushScale(x1OfSlider))

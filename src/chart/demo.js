@@ -44,7 +44,11 @@ let option = {
 			type:"Grid"
 		},
 		{
-			type:"Brush"
+			type:"Brush",
+			option:{
+				startIndex:1,
+				endIndex:8
+			}
 		}
 	],
 	charts: [
