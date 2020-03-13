@@ -56,6 +56,8 @@ export default class Chart extends Component {
 			yScale: null,
 			colorScale: null,
 
+			brushIndexs:null,
+
 			mouseCoordinate: null,
 			activeTickItem: null,
 			activeCharts: [],
@@ -65,11 +67,12 @@ export default class Chart extends Component {
 
 	componentWillMount = () => {
 		const { option } = this.props;
+		const {brushIndexs} = this.state;
 
 		this.setState(
 			{
 				...this.state,
-				...getStateByOption(option),
+				...getStateByOption(option, brushIndexs),
 			},
 			() => {}
 		);
@@ -79,10 +82,11 @@ export default class Chart extends Component {
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
 		const { option } = nextProps;
+		const {brushIndexs} = this.state;
 
 		this.setState({
 			...this.state,
-			...getStateByOption(option),
+			...getStateByOption(option, brushIndexs),
 		});
 
 		console.log("------receiveprops");
@@ -93,6 +97,7 @@ export default class Chart extends Component {
 		this.setState({
 			...this.state,
 			...getStateByOption(option, brushIndexs),
+			brushIndexs:brushIndexs
 		});
 	}
 
@@ -108,11 +113,11 @@ export default class Chart extends Component {
 			activeCharts,
 		} = this.state;
 
-		if (!chartData) {
+		if (!chartData || chartData.domain.length <= 1) {
 			return;
 		}
 
-		// console.log(chartData);
+		console.log(chartData);
 
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
@@ -321,12 +326,11 @@ export default class Chart extends Component {
 	};
 
 	inRange = () => {
-		let { mouseCoordinate } = this.state;
-		let { width = 800, height = 500, padding = 50 } = this.props;
+		let { mouseCoordinate, width, height, padding } = this.state;
 		let x = mouseCoordinate.chartX;
 		let y = mouseCoordinate.chartY;
 
-		if (x && x < width - padding && x > padding && y && y < height - padding && y > padding) {
+		if (x && x < width - padding.right && x > padding.left && y && y < height - padding.bottom && y > padding.top) {
 			return true;
 		} else {
 			return false;

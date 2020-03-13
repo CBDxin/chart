@@ -35,7 +35,7 @@ class Bar extends BaseShape {
 					key={index}
 					x={item.x - width / 2}
 					y={item.y}
-					height={wrapperStyle.height - wrapperStyle.padding - item.y}
+					height={wrapperStyle.height - wrapperStyle.padding.bottom - item.y}
 					width={width}
 					opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
 					fill={colorScale(option.key)}

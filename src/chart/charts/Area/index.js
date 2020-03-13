@@ -39,7 +39,7 @@ class Area extends BaseShape {
 			.y1(item => {
 				return item.y;
 			})
-			.y0(wrapperStyle.height - wrapperStyle.padding);
+			.y0(wrapperStyle.height - wrapperStyle.padding.bottom);
 
 		path.curve(curveCardinal);
 

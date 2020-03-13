@@ -6,7 +6,12 @@ import { random } from "./util/mathUtils";
 let option = {
 	height:500,
 	width:800,
-	padding:60,
+	// padding:{
+	// 	top:50,
+	// 	bottom:10,
+	// 	left:50,
+	// 	right:10
+	// },
 	dataSet: {
 		domain: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月","一月1", "二月1", "三月1", "四月1", "五月1", "六月1", "七月1", "八月1", "九月1", "十月1", "十一月1", "十二月1","一月2", "二月2", "三月2", "四月2", "五月2", "六月2", "七月2", "八月2", "九月2", "十月2", "十一月2", "十二月2","一月3", "二月3", "三月3", "四月3", "五月3", "六月3", "七月3", "八月3", "九月3", "十月3", "十一月3", "十二月3"],
 		range:{
@@ -106,7 +111,7 @@ class Demo extends Component {
 			<div>
 				{/* <Chart option={option}></Chart> */}
 				<Chart option={this.state.option}></Chart>
-				{/* <div onClick={this.changeData}>changeData</div> */}
+				<div onClick={this.changeData}>changeData</div>
 			</div>
 		);
 	}

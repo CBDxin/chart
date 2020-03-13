@@ -27,10 +27,30 @@ class BaseAxis extends Component {
     props = props || this.props;
 		const { padding, width, height } = this.props.wrapperStyle;
 		let { position } = this.props;
-		let x0 = position !== "right" ? padding : width - padding,
-			y0 = position !== "bottom" ? padding : height - padding,
-			x1 = position !== "left" ? width - padding : padding,
-			y1 = position !== "top" ? height - padding : padding;
+		let x0,x1,y0,y1;
+		switch(position){
+			case "top":
+				x0 = padding.left;
+				y0 = y1 = padding.top;
+				x1 = width - padding.right;
+				break;
+			case "right":
+				x0 = x1 = width - padding.right;
+				y0 = padding.top;
+				y1 = height - padding.bottom;
+				break;
+			case "bottom":
+				y0 = y1 = height - padding.bottom; 
+				x0 = padding.left;
+				x1 = width - padding.right;
+				break;
+			case "left":
+				x0 = x1 = padding.left;
+				y0 = padding.top;
+				y1 = height - padding.bottom
+				break;
+		}
+
 
 		this.setState({
 			axisLinePath: [
@@ -49,6 +69,11 @@ class BaseAxis extends Component {
 	renderTexts = () => {
     const { padding, width, height } = this.props.wrapperStyle;
 		let { position, fontSize = 12 } = this.props;
+
+		if(this.state.tickItems.length <=1){
+			return null;
+		}
+
 		return this.state.tickItems.map((item, index) => (
 			<text
 				fontSize={fontSize}
@@ -56,15 +81,15 @@ class BaseAxis extends Component {
 					position === "bottom" || position === "top"
 						? item.tick
 						: position === "left"
-						? padding - fontSize
-						: width - padding + fontSize
+						? padding.left - fontSize
+						: width - padding.right + fontSize
 				}
 				y={
 					position === "left" || position === "right"
 						? item.tick
 						: position === "top"
-						? padding - fontSize
-						: height - padding + (fontSize * 3) / 2
+						? padding.top - fontSize
+						: height - padding.bottom + (fontSize * 3) / 2
 				}
 				className="categoryAxisText"
 				textAnchor={position === "left" ? "end" : position === "right" ? "start" : "middle"}
@@ -78,6 +103,11 @@ class BaseAxis extends Component {
 	renderTicks = () => {
 		const { padding, width, height } = this.props.wrapperStyle;
 		let { position, fontSize = 12 } = this.props;
+	
+		if(this.state.tickItems.length <=1){
+			return null;
+		}
+
 		return this.state.tickItems.map((item, index) => (
 			<Line
 				data={[
@@ -86,28 +116,28 @@ class BaseAxis extends Component {
 							position === "bottom" || position === "top"
 								? item.tick
 								: position === "left"
-								? padding
-								: width - padding,
+								? padding.left
+								: width - padding.right,
 						y:
 							position === "left" || position === "right"
 								? item.tick
 								: position === "top"
-								? padding
-								: height - padding,
+								? padding.top
+								: height - padding.bottom,
 					},
 					{
 						x:
 							position === "bottom" || position === "top"
 								? item.tick
 								: position === "left"
-								? padding - fontSize /2 
-								: width - padding + fontSize / 2,
+								? padding.left - fontSize /2 
+								: width - padding.right + fontSize / 2,
 						y:
 							position === "left" || position === "right"
 								? item.tick
 								: position === "top"
-								? padding - fontSize / 2
-								: height - padding + fontSize / 2,
+								? padding.top - fontSize / 2
+								: height - padding.bottom + fontSize / 2,
 					},
         ]}
         key={index}

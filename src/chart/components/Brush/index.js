@@ -5,8 +5,8 @@ class Brush extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			x0OfSlider: props.wrapperStyle.padding,
-      x1OfSlider: props.wrapperStyle.padding + 100,
+			x0OfSlider: props.wrapperStyle.padding.left,
+      x1OfSlider: props.wrapperStyle.padding.left + 100,
       moveType:null,
       startMoveX: null,
       brushScale:null,
@@ -17,6 +17,10 @@ class Brush extends Component {
     this.getBrushScale();
   }
 
+  componentDidMount(){
+    this.updateBrushIndex()
+  }
+
   UNSAFE_componentWillReceiveProps(nextProps){
     this.getBrushScale(nextProps);
   }
@@ -25,7 +29,7 @@ class Brush extends Component {
     let {domain, wrapperStyle} = props || this.props;
     let brushRange = Array.from({length:domain.length}, (v,k) => k);
     this.setState({
-      brushScale:scaleQuantize([wrapperStyle.padding, wrapperStyle.width - wrapperStyle.padding], brushRange)
+      brushScale:scaleQuantize([wrapperStyle.padding.left, wrapperStyle.width - wrapperStyle.padding.right], brushRange)
     })
   }
 
@@ -38,7 +42,7 @@ class Brush extends Component {
 		return (
 			<rect
 				onMouseDown={(event)=>this.handleClickSlider(event, "Slider")}
-				y={wrapperStyle.height - wrapperStyle.padding + 25}
+				y={wrapperStyle.height - 30}
 				x={x}
 				width={width}
 				height={30}
@@ -57,7 +61,7 @@ class Brush extends Component {
 				<circle
           onMouseDown={(event)=>this.handleClickSlider(event, "x0")}
 					cx={x0OfSlider}
-					cy={wrapperStyle.height - wrapperStyle.padding + 25 + 15}
+					cy={wrapperStyle.height - 30 + 15}
 					r={13}
 					fill="#fff"
 					stroke="darkgray"
@@ -66,7 +70,7 @@ class Brush extends Component {
 				<circle
           onMouseDown={(event)=>this.handleClickSlider(event, "x1")}
 					cx={x1OfSlider}
-					cy={wrapperStyle.height - wrapperStyle.padding + 25 + 15}
+					cy={wrapperStyle.height - 30 + 15}
 					r={13}
 					fill="#fff"
 					stroke="darkgray"
@@ -135,10 +139,10 @@ class Brush extends Component {
   getXInRange = (x, distance)=>{
     let { wrapperStyle } = this.props;
     let result = x + distance;
-    if(result <  wrapperStyle.padding){
-      result =  wrapperStyle.padding;
-    }else if(result > wrapperStyle.width - wrapperStyle.padding){
-      result = wrapperStyle.width - wrapperStyle.padding;
+    if(result <  wrapperStyle.padding.left){
+      result =  wrapperStyle.padding.left;
+    }else if(result > wrapperStyle.width - wrapperStyle.padding.right){
+      result = wrapperStyle.width - wrapperStyle.padding.right;
     }
 
     return result;
@@ -153,14 +157,14 @@ class Brush extends Component {
 			maxX: maxX + distance,
 		};
 	
-		if (result.minX < wrapperStyle.padding) {
-      result.minX = wrapperStyle.padding;
-      result.maxX = wrapperStyle.padding + maxX - minX;
+		if (result.minX < wrapperStyle.padding.left) {
+      result.minX = wrapperStyle.padding.left;
+      result.maxX = wrapperStyle.padding.left + maxX - minX;
       return result;
     } 
-    if (result.maxX > wrapperStyle.width - wrapperStyle.padding) {
-      result.maxX = wrapperStyle.width - wrapperStyle.padding;
-      result.minX = wrapperStyle.width - wrapperStyle.padding - maxX + minX;
+    if (result.maxX > wrapperStyle.width - wrapperStyle.padding.right) {
+      result.maxX = wrapperStyle.width - wrapperStyle.padding.right;
+      result.minX = wrapperStyle.width - wrapperStyle.padding.right - maxX + minX;
       return result;
     }
 
@@ -179,10 +183,10 @@ class Brush extends Component {
 		return (
 			<g>
 				<rect
-					x={wrapperStyle.padding}
-					y={wrapperStyle.height - wrapperStyle.padding + 25}
+					x={wrapperStyle.padding.left}
+					y={wrapperStyle.height - 30}
 					height={30}
-					width={wrapperStyle.width - wrapperStyle.padding * 2}
+					width={wrapperStyle.width - wrapperStyle.padding.left - wrapperStyle.padding.right}
 					fill={"#fff"}
 					stroke={"darkgray"}
 					opacity={0.8}

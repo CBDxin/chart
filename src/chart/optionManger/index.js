@@ -2,14 +2,25 @@ import Charts from "../charts";
 import Components from "../components";
 import { color3 } from "../util/color";
 
+let defaultPadding = {
+	top:40,
+	bottom:40,
+	left:40,
+	right:40
+}
 
 export let getStateByOption = (option, brushIndexs) => {
 	let chartData = formaDataSet(option.dataSet, brushIndexs);
 	let wrapperStyle = {
 		height: option.height || 500,
 		width: option.width || 800,
-		padding: option.padding || 50,
+		padding: option.padding ? {...option.padding} : {...defaultPadding},
 	};
+
+	if(hasType(option.components, "Brush")){
+		wrapperStyle.padding.bottom = wrapperStyle.padding.bottom + 30;
+	}
+	
 	let scaleMap = createScale(chartData, wrapperStyle);
 	let colorScale = createColorScale(option.charts);
 
@@ -59,17 +70,17 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 };
 
 let createScale = (chartData, wrapperStyle) => {
-	const { padding = 50, width = 800, height = 500 } = wrapperStyle;
+	const { padding, width, height} = wrapperStyle;
 
 	let rangeData = [];
 	Object.keys(chartData.range).map(rangeItem => {
 		rangeData = [...rangeData, ...chartData.range[rangeItem]]
 	});
 
-	let xScale = Components.scale(chartData.domain, [padding, width - padding], "band");
+	let xScale = Components.scale(chartData.domain, [padding.left, width - padding.right], "band");
 	let yScale = Components.scale(
 		[0, Math.max(...rangeData) * 1.2],
-		[height - padding, padding]
+		[height - padding.bottom, padding.top]
 	);
 
 	return {

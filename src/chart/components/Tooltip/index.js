@@ -58,12 +58,12 @@ class Tooltip extends Component {
 		translateX = this.getTranslate(
 			activeTickItem.activeTickPostion,
 			this.box.current.clientWidth,
-			wrapperStyle.width - wrapperStyle.padding 
+			wrapperStyle.width - wrapperStyle.padding.right 
     );
 		translateY = this.getTranslate(
 			activeTickItem.mouseCoordinate.chartY,
 			this.box.current.clientHeight,
-			wrapperStyle.height - wrapperStyle.padding
+			wrapperStyle.height - wrapperStyle.padding.bottom
 		);
 
 		this.setState({

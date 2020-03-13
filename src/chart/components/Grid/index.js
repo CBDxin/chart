@@ -31,16 +31,17 @@ class BaseAxis extends Component {
 		let ticksValue = yScale.ticksValue();
 
 		return ticksValue.map((item, index) => (
+			isNaN(item) ? null :
 			<Line
         key={index}
         color={"gainsboro"}
 				data={[
 					{
-						x: padding,
+						x: padding.left,
 						y: item,
 					},
 					{
-						x: width - padding,
+						x: width - padding.right,
 						y: item,
 					},
 				]}
@@ -56,17 +57,18 @@ class BaseAxis extends Component {
 		let ticksValue = xScale.ticksValue();
 
 		return ticksValue.map((item, index) => (
+			isNaN(item) ? null :
 			<Line
         key={index}
         color={"gainsboro"}
 				data={[
 					{
 						x: item,
-						y: padding,
+						y: padding.top,
 					},
 					{
 						x: item,
-						y: height - padding,
+						y: height - padding.bottom,
 					},
 				]}
 			></Line>
