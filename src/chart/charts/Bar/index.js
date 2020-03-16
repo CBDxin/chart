@@ -12,16 +12,6 @@ class Bar extends BaseShape {
 		};
 	}
 
-	componentWillMount(){
-		this.renderWithAnimation()
-	}
-
-	UNSAFE_componentWillReceiveProps(nextProps){
-		this.setState({
-			preData:this.state.data
-		}, this.renderWithAnimation(nextProps))
-	}
-
 	createRects = () => {
 		let { xScale ,wrapperStyle, option, colorScale, activeTickItem, isActive } = this.props;
 

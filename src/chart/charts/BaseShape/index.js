@@ -9,7 +9,20 @@ class BaseChart extends Component {
 		this.state = {
 	
     };
-  }
+	}
+	
+	componentDidMount = () => {
+		this.renderWithAnimation();
+	};
+
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.setState(
+			{
+				preData: this.state.data,
+			},
+			this.renderWithAnimation(nextProps)
+		);
+	}
   
   renderDot = (props)=>{
 		let { option, colorScale, activeTickItem, isActive } = props || this.props;

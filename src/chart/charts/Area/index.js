@@ -13,19 +13,6 @@ class Area extends BaseShape {
 		};
 	}
 
-	componentDidMount = () => {
-		this.renderWithAnimation();
-	};
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState(
-			{
-				preData: this.state.data,
-			},
-			this.renderWithAnimation(nextProps)
-		);
-	}
-
 	renderArea = () => {
 		let { wrapperStyle, colorScale, option, isActive } = this.props;
 		let { data } = this.state;

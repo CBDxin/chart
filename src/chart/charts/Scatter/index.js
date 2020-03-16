@@ -7,23 +7,9 @@ class Scatter extends BaseShape {
 	constructor(props) {
 		super(props);
 		this.state = {
-			d: "",
 			preData: null,
 			data: null,
 		};
-	}
-
-	componentDidMount = () => {
-		this.renderWithAnimation();
-	};
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState(
-			{
-				preData: this.state.data,
-			},
-			this.renderWithAnimation(nextProps)
-		);
 	}
 
 	renderScatter = () => {

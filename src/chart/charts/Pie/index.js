@@ -13,19 +13,6 @@ class Pie extends BaseShape {
 		};
   }
   
-  componentDidMount = () => {
-		this.renderWithAnimation();
-	};
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState(
-			{
-				preData: this.state.data,
-			},
-			this.renderWithAnimation(nextProps)
-		);
-  }
-  
   animation = (precent, props) => {
 		let { data } = props;
     let { preData } = this.state;
