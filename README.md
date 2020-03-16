@@ -7,10 +7,15 @@ npm run start
 
 可视化图表：
 1. Line
+<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Line.png"/>
 2. Area
+<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Area.png"/>
 3. Bar
+<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Bar.png"/>
 4. Scatter
+<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Scatter.png"/>
 5. Pie
+<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Pie.png"/>
 
 可视化组件：
 1. Scale
