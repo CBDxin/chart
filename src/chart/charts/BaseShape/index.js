@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { interpolateNumber, timer } from "d3";
+import {getMapScales} from "../../optionManger";
 
 
 class BaseChart extends Component {
@@ -13,15 +14,50 @@ class BaseChart extends Component {
 	
 	componentDidMount = () => {
 		this.renderWithAnimation();
+		this.getMapScales();
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
 		this.setState(
 			{
 				preData: this.state.data,
-			},
-			this.renderWithAnimation(nextProps)
+			}, ()=>{
+				this.renderWithAnimation(nextProps)
+				this.getMapScales(nextProps);
+			}
 		);
+	}
+
+	getMapScales = (props)=>{
+		let {option} = props || this.props;
+		let VisualMap = option.VisualMap;
+		if(!VisualMap || !VisualMap.mappers){
+			return ;
+		}
+
+		let mapScales = getMapScales(VisualMap.mappers);
+
+		this.setState({
+			mapScales
+		}, ()=>{
+			console.log('-----mapScale', mapScales.colorScale(200))
+			this.getVisualMapObj()
+		})
+	}
+
+	getVisualMapObj = ()=>{
+		let {mappers} = this.props.option.VisualMap;
+		let {mapScales} = this.state;
+		let VisualMapObj = {};
+
+		if(mapScales.colorScale){
+			VisualMapObj.mapColors = mappers.color.data.map(item=>mapScales.colorScale(item))
+		}
+
+		console.log(VisualMapObj)
+		this.setState({
+			VisualMapObj
+		})
 	}
   
   renderDot = (props)=>{

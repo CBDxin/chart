@@ -29,6 +29,10 @@ export let scale = (domain, range, type) => {
 				.domain(domain)
 				.range(range);
 			break;
+		case "color":
+		case "opcity":
+		case "width":
+		case "radius":
 		case "linear":
 		default:
 			scale = scaleLinear()

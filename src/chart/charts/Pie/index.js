@@ -10,6 +10,7 @@ class Pie extends BaseShape {
 		this.state = {
 			preData: null,
 			data: null,
+			VisualMapObj:null
 		};
   }
   
@@ -44,7 +45,7 @@ class Pie extends BaseShape {
 			cy = this.props.wrapperStyle.height / 2,
     } = props || this.props;
 
-    let { data } = this.state;
+    let { data, VisualMapObj } = this.state;
 
 		let style = {
 			transform: `translate(${cx}px,${cy}px)`,
@@ -57,7 +58,7 @@ class Pie extends BaseShape {
 		return data && data.map((item, index) => {
 			return (
 				<g style={style} key={index}>
-					<path fill={color3[index]} opacity={0.5} d={pieArc(item)}></path>
+					<path fill={VisualMapObj ? VisualMapObj.mapColors[index] : color3[index]} opacity={0.5} d={pieArc(item)}></path>
 				</g>
 			);
 		});

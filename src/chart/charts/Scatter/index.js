@@ -9,12 +9,13 @@ class Scatter extends BaseShape {
 		this.state = {
 			preData: null,
 			data: null,
+			VisualMapObj:null
 		};
 	}
 
 	renderScatter = () => {
     let {xScale, option,colorScale, activeTickItem, isActive } = this.props;
-    let {data} = this.state;
+    let {data, VisualMapObj} = this.state;
 		let bandWidth = xScale.bandwidth();
 		let defaultWidth = bandWidth * WIDTH;
 
@@ -26,7 +27,7 @@ class Scatter extends BaseShape {
 					cy={item.y}
           r={defaultWidth}
           opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
-          fill={colorScale(option.key)}
+          fill={VisualMapObj ? VisualMapObj.mapColors[index] : colorScale(option.key)}
 				></circle>
 			);
 		});

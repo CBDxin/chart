@@ -1,6 +1,7 @@
 import Charts from "../charts";
 import Components from "../components";
 import { color3 } from "../util/color";
+import { scale } from "../components/Scale";
 
 let defaultPadding = {
 	top:40,
@@ -105,4 +106,17 @@ export let hasType = (container, type)=>{
 	})
 
 	return result;
+}
+
+export let getMapScales = (mappers)=>{
+	let mapperKeys = Object.keys(mappers)
+	let mapScales = {};
+
+	console.log(mappers)
+
+	mapperKeys.map((item)=>{
+		mapScales[item + "Scale"] = scale([Math.min(...mappers[item].data), Math.max(...mappers[item].data)], mappers[item].range, item);
+	})
+
+	return mapScales;
 }

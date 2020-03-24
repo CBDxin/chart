@@ -8,7 +8,8 @@ class Bar extends BaseShape {
 		super(props);
 		this.state = {
 			preData: null,
-			data: null
+			data: null,
+			VisualMapObj:null
 		};
 	}
 
@@ -17,7 +18,7 @@ class Bar extends BaseShape {
 
 		let bandWidth = xScale.bandwidth();
 		let width = bandWidth * WIDTH;
-		let { data } = this.state;
+		let { data, VisualMapObj } = this.state;
 
 		return data && data.map((item, index) => {
 			return (
@@ -28,7 +29,7 @@ class Bar extends BaseShape {
 					height={wrapperStyle.height - wrapperStyle.padding.bottom - item.y}
 					width={width}
 					opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
-					fill={colorScale(option.key)}
+					fill={VisualMapObj ? VisualMapObj.mapColors[index] : colorScale(option.key)}
 				></rect>
 			);
 		});

@@ -87,17 +87,17 @@ let option = {
 		// 	key: "oppo",
 		// },
 		{
-			type: "Area",
+			type: "Scatter",
 			name: "vivo",
 			key: "vivo",
 			VisualMap: {
-				option: {
-					orient: "vertical",
-					text: ["高", "低"],
-					inRange: {
-						color: ["#ffebee", "#ff1744"],
+				orient: "vertical",
+				text: ["高", "低"],
+				mappers: {
+					color: {
+						range: ['#D7DA8B', '#E15457'],
+						data: [100, 500, 20, 300, 700, 500, 200, 200, 200, 200, 200, 200],
 					},
-					mapData:[100, 500, 20, 300, 700, 500, 200, 200, 200, 200, 200, 200]
 				},
 			},
 		},
