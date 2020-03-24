@@ -29,7 +29,7 @@ class Bar extends BaseShape {
 					height={wrapperStyle.height - wrapperStyle.padding.bottom - item.y}
 					width={width}
 					opacity={activeTickItem && (index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5}
-					fill={VisualMapObj ? VisualMapObj.mapColors[index] : colorScale(option.key)}
+					fill={VisualMapObj && VisualMapObj.mapColors ? VisualMapObj.mapColors[index] : colorScale(option.key)}
 				></rect>
 			);
 		});

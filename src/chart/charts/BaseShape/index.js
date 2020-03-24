@@ -40,7 +40,7 @@ class BaseChart extends Component {
 		this.setState({
 			mapScales
 		}, ()=>{
-			console.log('-----mapScale', mapScales.colorScale(200))
+			// console.log('-----mapScale', mapScales.colorScale(200))
 			this.getVisualMapObj()
 		})
 	}
@@ -54,7 +54,11 @@ class BaseChart extends Component {
 			VisualMapObj.mapColors = mappers.color.data.map(item=>mapScales.colorScale(item))
 		}
 
-		console.log(VisualMapObj)
+		if(mapScales.radiusScale){
+			VisualMapObj.mapRadiuss = mappers.radius.data.map(item=>mapScales.radiusScale(item))
+		}
+
+		console.log(mapScales)
 		this.setState({
 			VisualMapObj
 		})
