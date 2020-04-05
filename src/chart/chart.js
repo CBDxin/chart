@@ -105,21 +105,23 @@ export default class Chart extends Component {
 			colorScale,
 			activeTickItem,
 			activeCharts,
+			brushIndexs,
 		} = this.state;
 
 		if (!chartData || chartData.domain.length <= 1) {
 			return;
 		}
 
-		console.log(chartData);
+		// console.log(chartData);
 
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
 
 			// console.log(chartData.data[item.key])
+			console.log('-----activeTickItem', activeTickItem)
 
 			return (
-				Chart && (
+				Chart && chartData.data[item.key] && (
 					<Chart
 						option={item}
 						key={index}
@@ -129,6 +131,7 @@ export default class Chart extends Component {
 						yScale={yScale}
 						wrapperStyle={wrapperStyle}
 						activeTickItem={activeTickItem}
+						brushIndexs={brushIndexs}
 						isActive={activeCharts.indexOf(item.key) === -1 ? false : true}
 					></Chart>
 				)
