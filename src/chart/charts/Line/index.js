@@ -10,12 +10,12 @@ class Line extends BaseShape {
 		this.state = {
 			preData: null,
 			data: null,
-			VisualMapObj:null
+			VisualMapObj: null,
 		};
 	}
 
 	renderLine = () => {
-		let { option, colorScale, isActive } = this.props;
+		let { option, colorScale, isActive, isUnActive } = this.props;
 		let { data, VisualMapObj } = this.state;
 		let colorCradient;
 		let path = line()
@@ -27,9 +27,11 @@ class Line extends BaseShape {
 			});
 
 		// path.curve(curveCardinal);
-		if(VisualMapObj){
-			if(VisualMapObj.mapColors){
-				colorCradient = <LinearGradient id="colorCradient" colors={VisualMapObj.mapColors}></LinearGradient>
+		if (VisualMapObj) {
+			if (VisualMapObj.mapColors) {
+				colorCradient = (
+					<LinearGradient id="colorCradient" colors={VisualMapObj.mapColors}></LinearGradient>
+				);
 			}
 		}
 
@@ -41,7 +43,13 @@ class Line extends BaseShape {
 						d={path(data)}
 						className="line"
 						fill="none"
-						stroke={colorCradient ? "url(#colorCradient)" : colorScale(option.key)}
+						stroke={
+							isUnActive
+								? "transparent"
+								: colorCradient
+								? "url(#colorCradient)"
+								: colorScale(option.key)
+						}
 						strokeWidth={isActive ? "3px" : "2px"}
 					></path>
 				)}

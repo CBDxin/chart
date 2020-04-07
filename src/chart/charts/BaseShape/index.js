@@ -73,7 +73,7 @@ class BaseChart extends Component {
 	};
 
 	renderDot = props => {
-		let { option, colorScale, activeTickItem, isActive } = props || this.props;
+		let { option, colorScale, activeTickItem, isActive, isUnActive } = props || this.props;
 		let { data } = this.state;
 
 		return (
@@ -85,8 +85,8 @@ class BaseChart extends Component {
 						cx={item.x}
 						cy={item.y}
 						r={(activeTickItem && index === activeTickItem.activeIndex) || isActive ? 5 : 3}
-						stroke={colorScale(option.key)}
-						fill={"#fff"}
+						stroke={isUnActive ? "transparent" : colorScale(option.key)}
+						fill={isUnActive ? "transparent" : "#fff"}
 					></circle>
 				);
 			})

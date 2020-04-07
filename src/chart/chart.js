@@ -64,6 +64,7 @@ export default class Chart extends Component {
 			mouseCoordinate: null,
 			activeTickItem: null,
 			activeCharts: [],
+			unActiveCharts: [],
 			wrapperStyle: {},
 		};
 	}
@@ -105,6 +106,7 @@ export default class Chart extends Component {
 			colorScale,
 			activeTickItem,
 			activeCharts,
+			unActiveCharts,
 			brushIndexs,
 		} = this.state;
 
@@ -133,6 +135,7 @@ export default class Chart extends Component {
 						activeTickItem={activeTickItem}
 						brushIndexs={brushIndexs}
 						isActive={activeCharts.indexOf(item.key) === -1 ? false : true}
+						isUnActive={unActiveCharts.indexOf(item.key) === -1 ? false : true}
 					></Chart>
 				)
 			);
@@ -233,7 +236,7 @@ export default class Chart extends Component {
 	};
 
 	renderLegend = () => {
-		let { components, colorScale, activeCharts } = this.state;
+		let { components, colorScale, activeCharts, unActiveCharts } = this.state;
 
 		let legendOption = hasType(components, "Legend");
 		if (!legendOption) {
@@ -244,12 +247,16 @@ export default class Chart extends Component {
 		return (
 			<Legend
 				activeCharts={activeCharts}
+				unActiveCharts={unActiveCharts}
 				setActiveCharts={this.setActiveCharts}
+				setUnActiveCharts={this.setUnActiveCharts}
 				option={legendOption}
 				colorScale={colorScale}
 			></Legend>
 		);
 	};
+
+	//提个公共部分
 
 	setActiveCharts = chartKey => {
 		let { activeCharts } = this.state;
@@ -263,6 +270,19 @@ export default class Chart extends Component {
 			activeCharts,
 		});
 	};
+
+	setUnActiveCharts = chartKey => {
+		let { unActiveCharts } = this.state;
+		if (unActiveCharts.indexOf(chartKey) !== -1) {
+			unActiveCharts.splice(unActiveCharts.indexOf(chartKey), 1);
+		} else {
+			unActiveCharts.push(chartKey);
+		}
+
+		this.setState({
+			unActiveCharts,
+		});
+	}
 
 	handleOnClick = event => {
 		event.persist();

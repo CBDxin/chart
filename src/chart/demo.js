@@ -48,15 +48,15 @@ let option = {
 		{
 			type: "Tooltip",
 		},
-		// {
-		// 	type: "Legend",
-		// 	option: {
-		// 		dataItems: ["xiaoMi", "huaWei", "oppo", "vivo", "iphone"],
-		// 	},
-		// },
-		// {
-		// 	type: "Grid",
-		// },
+		{
+			type: "Legend",
+			option: {
+				dataItems: ["xiaoMi", "huaWei", "oppo", "vivo", "iphone"],
+			},
+		},
+		{
+			type: "Grid",
+		},
 		{
 			type:"Brush",
 			option:{
@@ -67,7 +67,7 @@ let option = {
 	],
 	charts: [
 		{
-			type: "Area",
+			type: "Line",
 			name: "苹果",
 			key: "iphone",
 			VisualMap: {

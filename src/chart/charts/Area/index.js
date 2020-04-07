@@ -10,21 +10,23 @@ class Area extends BaseShape {
 		this.state = {
 			preData: null,
 			data: null,
-			mapScales:null,
-			VisualMapObj:null
+			mapScales: null,
+			VisualMapObj: null,
 		};
 	}
 
 	renderArea = () => {
-		let { wrapperStyle, colorScale, option, isActive } = this.props;
+		let { wrapperStyle, colorScale, option, isActive, isUnActive } = this.props;
 		let { data, VisualMapObj } = this.state;
 		let colorCradient;
 
 		// console.log(data)
 
-		if(VisualMapObj){
-			if(VisualMapObj.mapColors){
-				colorCradient = <LinearGradient id="colorCradient" colors={VisualMapObj.mapColors}></LinearGradient>
+		if (VisualMapObj) {
+			if (VisualMapObj.mapColors) {
+				colorCradient = (
+					<LinearGradient id="colorCradient" colors={VisualMapObj.mapColors}></LinearGradient>
+				);
 			}
 		}
 
@@ -40,17 +42,21 @@ class Area extends BaseShape {
 		path.curve(curveCardinal);
 
 		return (
-			data && <React.Fragment>
+			data && (
+				<React.Fragment>
 					<g>
 						{colorCradient}
 						<path
 							opacity={isActive ? 1 : 0.8}
-							fill={colorCradient ? "url(#colorCradient)" : colorScale(option.key)}
+							fill={
+								isUnActive ? "transparent" : colorCradient ? "url(#colorCradient)" : colorScale(option.key)
+							}
 							d={path(data)}
 							className="area"
 						></path>
 					</g>
 				</React.Fragment>
+			)
 		);
 	};
 
