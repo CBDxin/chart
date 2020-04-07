@@ -33,11 +33,13 @@ class CategoryAxis extends BaseAxis {
 	}
 
 	componentWillMount = () => {
+		super.componentWillMount();
 		this.getAxisLinePath();
 		this.getTickItems();
   };
   
   UNSAFE_componentWillReceiveProps(nextProps){
+		super.UNSAFE_componentWillReceiveProps(nextProps)
 		this.getAxisLinePath(nextProps);
 		this.getTickItems(nextProps);
 	}
