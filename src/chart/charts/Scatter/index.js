@@ -19,7 +19,7 @@ class Scatter extends BaseShape {
 		let bandWidth = xScale.bandwidth();
 		let defaultWidth = bandWidth * WIDTH;
 
-		console.log(VisualMapObj);
+		// console.log(VisualMapObj);
 
 		return (
 			data &&

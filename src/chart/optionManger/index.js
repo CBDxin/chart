@@ -46,7 +46,7 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		data.domain = dataSet.domain.slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
 		Object.keys(dataSet.range).map(item=>{
 			data.range[item] = dataSet.range[item].slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
-			console.log(dataSet)
+			// console.log(dataSet)
 		})
 	}else{
 		data.domain = dataSet.domain
@@ -65,7 +65,7 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		});
 	});
 
-	console.log(data)
+	// console.log(data)
 
 	return data;
 };
@@ -112,7 +112,7 @@ export let getMapScales = (mappers)=>{
 	let mapperKeys = Object.keys(mappers)
 	let mapScales = {};
 
-	console.log(mappers)
+	// console.log(mappers)
 
 	mapperKeys.map((item)=>{
 		mapScales[item + "Scale"] = scale([Math.min(...mappers[item].data), Math.max(...mappers[item].data)], mappers[item].range, item);

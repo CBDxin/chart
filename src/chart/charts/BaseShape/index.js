@@ -66,7 +66,7 @@ class BaseChart extends Component {
 				: mapRadiuss;
 		}
 
-		console.log(mapScales);
+		// console.log(mapScales);
 		this.setState({
 			VisualMapObj,
 		});

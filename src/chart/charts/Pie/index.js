@@ -47,7 +47,7 @@ class Pie extends BaseShape {
 
 		let { data, VisualMapObj } = this.state;
 		
-		console.log('-----pieData', data)
+		// console.log('-----pieData', data)
 
 		let style = {
 			transform: `translate(${cx}px,${cy}px)`,

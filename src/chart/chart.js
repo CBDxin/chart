@@ -81,7 +81,7 @@ export default class Chart extends Component {
 			() => {}
 		);
 
-		console.log("-----willmount", getStateByOption(option));
+		// console.log("-----willmount", getStateByOption(option));
 	};
 
 	UNSAFE_componentWillReceiveProps(nextProps) {
@@ -93,7 +93,7 @@ export default class Chart extends Component {
 			...getStateByOption(option, brushIndexs),
 		});
 
-		console.log("------receiveprops");
+		// console.log("------receiveprops");
 	}
 
 	renderCharts = () => {
@@ -120,7 +120,7 @@ export default class Chart extends Component {
 			let Chart = Charts[item.type];
 
 			// console.log(chartData.data[item.key])
-			console.log('-----activeTickItem', activeTickItem)
+			// console.log('-----activeTickItem', activeTickItem)
 
 			return (
 				Chart && chartData.data[item.key] && (
@@ -298,7 +298,7 @@ export default class Chart extends Component {
 			return null;
 		}
 
-		console.log('-------chartMouseMove')
+		// console.log('-------chartMouseMove')
 
 		event.persist();
 		let mouseCoordinate = getMouseInfo(event, this.container);
@@ -322,7 +322,7 @@ export default class Chart extends Component {
 		this.setState({
 			activeTickItem: null,
 		});
-		console.log("----mouseout");
+		// console.log("----mouseout");
 	};
 
 	getActiveTickItem = debounce(() => {
@@ -342,7 +342,7 @@ export default class Chart extends Component {
 				}
 			});
 
-			console.log('------activeData',activeData);
+			// console.log('------activeData',activeData);
 
 			let activeTickPostion = xScale(activeTick);
 			this.setState({
@@ -358,7 +358,7 @@ export default class Chart extends Component {
 			this.setState({
 				activeTickItem: null,
 			});
-			console.log("---outrange");
+			// console.log("---outrange");
 		}
 	}, 100);
 

@@ -101,7 +101,7 @@ class Brush extends Component {
     event.persist();
     
     this.props.changeBrushState(true);
-    console.log(type)
+    // console.log(type)
 
 		this.setState(
 			{
@@ -115,7 +115,7 @@ class Brush extends Component {
 	};
 
 	onMoseMove = event => {
-		console.log("mousemove");
+		// console.log("mousemove");
 		let { x0OfSlider, x1OfSlider, startMoveX, moveType } = this.state;
     let distance = event.pageX - startMoveX;
     
@@ -179,7 +179,7 @@ class Brush extends Component {
 	};
 
 	onMoseUp = event => {
-    console.log("onmouseup");
+    // console.log("onmouseup");
     
     this.props.changeBrushState(false);
 
