@@ -34,12 +34,10 @@ class NumberAxis extends BaseAxis {
 	}
 
 	componentWillMount = () => {
-		this.getAxisLinePath();
     this.getTickItems();
   };
   
   UNSAFE_componentWillReceiveProps(nextProps){
-		this.getAxisLinePath(nextProps);
 		this.getTickItems(nextProps);
 	}
 
@@ -60,10 +58,9 @@ class NumberAxis extends BaseAxis {
 	};
 
 	render() {
-		const { axisLinePath } = this.state;
 		return (
 			<g>
-				<Line data={axisLinePath}></Line>
+				{this.getAxisLinePath()}
 				{this.renderTexts()}
         {this.renderTicks()}
 			</g>

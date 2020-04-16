@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { debounce } from "lodash";
+import { debounce, throttle } from "lodash";
 
 import { getActiveIndex, getMouseInfo } from "./EvenHandler";
 import { getStateByOption, hasType } from "./optionManger";
@@ -49,6 +49,7 @@ export default class Chart extends Component {
 		super(props);
 
 		this.container = React.createRef();
+		this.box = React.createRef();
 
 		this.state = {
 			charts: null,
@@ -59,42 +60,39 @@ export default class Chart extends Component {
 			colorScale: null,
 
 			brushIndexs: null,
-			brushing:false,
+			brushing: false,
 
 			mouseCoordinate: null,
 			activeTickItem: null,
 			activeCharts: [],
 			unActiveCharts: [],
-			wrapperStyle: {},
+			wrapperStyle: {}
 		};
 	}
 
-	componentWillMount = () => {
-		const { option } = this.props;
-		const { brushIndexs } = this.state;
+	UNSAFE_componentWillReceiveProps(nextProps) {
+		this.initViewBox(nextProps);
+	}
 
+	componentDidMount() {
+		this.initViewBox();
+		window.addEventListener("resize", throttle(this.initViewBox, 200));
+	}
+
+	initViewBox = (props) => {
+		let { option, brushIndexs } = props && props.option ? props : this.props;
+		let height = this.box.current ? this.box.current.clientHeight : this.state.wrapperStyle.height;
+		let width = this.box.current ? this.box.current.clientWidth : this.state.wrapperStyle.width;
 		this.setState(
 			{
 				...this.state,
-				...getStateByOption(option, brushIndexs),
+				...getStateByOption({ ...option, height: height, width: width }, brushIndexs)
 			},
-			() => {}
+			() => {
+				console.log(this.state);
+			}
 		);
-
-		// console.log("-----willmount", getStateByOption(option));
 	};
-
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { option } = nextProps;
-		const { brushIndexs } = this.state;
-
-		this.setState({
-			...this.state,
-			...getStateByOption(option, brushIndexs),
-		});
-
-		// console.log("------receiveprops");
-	}
 
 	renderCharts = () => {
 		let {
@@ -107,7 +105,7 @@ export default class Chart extends Component {
 			activeTickItem,
 			activeCharts,
 			unActiveCharts,
-			brushIndexs,
+			brushIndexs
 		} = this.state;
 
 		if (!chartData || chartData.domain.length <= 1) {
@@ -123,7 +121,8 @@ export default class Chart extends Component {
 			// console.log('-----activeTickItem', activeTickItem)
 
 			return (
-				Chart && chartData.data[item.key] && (
+				Chart &&
+				chartData.data[item.key] && (
 					<Chart
 						option={item}
 						key={index}
@@ -205,15 +204,15 @@ export default class Chart extends Component {
 		this.setState({
 			...this.state,
 			...getStateByOption(option, brushIndexs),
-			brushIndexs: brushIndexs,
+			brushIndexs: brushIndexs
 		});
 	};
 
-	changeBrushState = (brushing)=>{
+	changeBrushState = brushing => {
 		this.setState({
 			brushing
-		})
-	}
+		});
+	};
 
 	renderBrush = () => {
 		let { wrapperStyle, components } = this.state;
@@ -267,7 +266,7 @@ export default class Chart extends Component {
 		}
 
 		this.setState({
-			activeCharts,
+			activeCharts
 		});
 	};
 
@@ -280,15 +279,15 @@ export default class Chart extends Component {
 		}
 
 		this.setState({
-			unActiveCharts,
+			unActiveCharts
 		});
-	}
+	};
 
 	handleOnClick = event => {
 		event.persist();
 		let mouseCoordinate = getMouseInfo(event, this.container);
 		this.setState({
-			mouseCoordinate,
+			mouseCoordinate
 		});
 	};
 
@@ -304,7 +303,7 @@ export default class Chart extends Component {
 		let mouseCoordinate = getMouseInfo(event, this.container);
 		this.setState(
 			{
-				mouseCoordinate,
+				mouseCoordinate
 			},
 			() => {
 				this.getActiveTickItem();
@@ -320,7 +319,7 @@ export default class Chart extends Component {
 
 		event.persist();
 		this.setState({
-			activeTickItem: null,
+			activeTickItem: null
 		});
 		// console.log("----mouseout");
 	};
@@ -337,7 +336,7 @@ export default class Chart extends Component {
 					activeData[index] = {
 						key: item,
 						value: chartData.range[item][activeIndex],
-						name: charts[index].name,
+						name: charts[index].name
 					};
 				}
 			});
@@ -351,12 +350,12 @@ export default class Chart extends Component {
 					activeData,
 					activeTickPostion,
 					activeIndex,
-					mouseCoordinate,
-				},
+					mouseCoordinate
+				}
 			});
 		} else {
 			this.setState({
-				activeTickItem: null,
+				activeTickItem: null
 			});
 			// console.log("---outrange");
 		}
@@ -384,9 +383,16 @@ export default class Chart extends Component {
 
 	render() {
 		const { width = 800, height = 500 } = this.props.option;
-
+		console.log("render");
 		return (
-			<div className="view-box" width={width} height={height}>
+			<div
+				className="view-box"
+				style={{
+					width: width,
+					height: height
+				}}
+				ref={this.box}
+			>
 				{this.renderLegend()}
 				<div
 					className="chart-wrapper"
@@ -397,7 +403,7 @@ export default class Chart extends Component {
 				>
 					{this.renderTooltip()}
 					{/* <Tooltip activeTickItem={activeTickItem} wrapperStyle={wrapperStyle}></Tooltip> */}
-					<svg width={width} height={height}>
+					<svg width="100%" height="100%">
 						{this.renderComponents()}
 						{this.renderCharts()}
 						{this.renderBrush()}

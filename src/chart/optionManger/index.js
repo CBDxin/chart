@@ -2,6 +2,7 @@ import Charts from "../charts";
 import Components from "../components";
 import { color3 } from "../util/color";
 import { scale } from "../components/Scale";
+import { format } from "prettier";
 
 let defaultPadding = {
 	top:40,
@@ -53,7 +54,19 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		data.range = dataSet.range
 	}
 
-	Object.keys(data.range).map((rangeItem, index) => {
+	Object.keys(data.range).map((rangeItem) => {
+
+		let length = dataSet.domain.length
+		console.log(data.range[rangeItem].length, length)
+		if(data.range[rangeItem].length > length){
+			data.range[rangeItem] = data.range[rangeItem].splice(0, length)
+		}else if(data.range[rangeItem].length < length){
+			let arr = new Array(length - data.range[rangeItem].length);
+			arr.fill(0);
+			data.range[rangeItem] = [...data.range[rangeItem], ...arr]
+			console.log(1111111111)
+		}
+
 		data.data[rangeItem] = [] 
 		data.domain.map((item, index) => {
 			let t = {
@@ -65,7 +78,7 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		});
 	});
 
-	// console.log(data)
+	console.log(data)
 
 	return data;
 };
@@ -98,6 +111,9 @@ let createColorScale = (charts)=>{
 
 export let hasType = (container, type)=>{
 	let result = false;
+	if(!container){
+		return result
+	}
 	container.some(item=>{
 		if(item.type === type){
 			result = item.option || true;

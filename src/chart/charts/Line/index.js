@@ -61,7 +61,7 @@ class Line extends BaseShape {
 		return (
 			<React.Fragment>
 				{this.renderLine()}
-				{this.renderDot()}
+				{/* {this.renderDot()} */}
 			</React.Fragment>
 		);
 	}

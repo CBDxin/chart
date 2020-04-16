@@ -112,7 +112,7 @@ class BaseChart extends Component {
 	};
 
 	animation = (precent, props) => {
-		let { data } = props;
+		let { data, wrapperStyle:{height, padding} } = props;
 		let { preData } = this.state;
 
 		if (precent > 1) {
@@ -123,7 +123,7 @@ class BaseChart extends Component {
 
 		let nextData = data.map((item, index) => {
 			const interpolatorY = interpolateNumber(
-				preData ? (preData[index] ? preData[index].y : preData[preData.length - 1].y) : 0,
+				preData ? (preData[index] ? preData[index].y : preData[preData.length - 1].y) : height - padding.bottom,
 				item.y
 			);
 			const interpolatorX = interpolateNumber(

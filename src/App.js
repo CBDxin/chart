@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Demo from './chart/demo'
+import Demo from './demo'
+// import Demo from '../src/chart/demo'
 
 function App() {
   return (

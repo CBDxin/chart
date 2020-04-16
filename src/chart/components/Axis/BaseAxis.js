@@ -68,18 +68,18 @@ class BaseAxis extends Component {
 				break;
 		}
 
-		this.setState({
-			axisLinePath: [
-				{
-					x: x0,
-					y: y0,
-				},
-				{
-					x: x1,
-					y: y1,
-				},
-			],
-		});
+		let axisLinePath = [
+			{
+				x: x0,
+				y: y0
+			},
+			{
+				x: x1,
+				y: y1
+			}
+		];
+
+		return <Line data={axisLinePath}></Line>;
 	};
 
 	renderTexts = () => {
@@ -142,7 +142,7 @@ class BaseAxis extends Component {
 								? item.tick
 								: position === "top"
 								? padding.top
-								: height - padding.bottom,
+								: height - padding.bottom
 					},
 					{
 						x:
@@ -156,8 +156,8 @@ class BaseAxis extends Component {
 								? item.tick
 								: position === "top"
 								? padding.top - fontSize / 2
-								: height - padding.bottom + fontSize / 2,
-					},
+								: height - padding.bottom + fontSize / 2
+					}
 				]}
 				key={index}
 			></Line>

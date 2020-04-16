@@ -22,7 +22,8 @@ class PieChart extends Component{
     let { data } = props || this.props;
 
     let pieCreator = pie().value(d => d.range).sort((a, b)=>b);
-		let formatedData = pieCreator(data);
+    let formatedData = pieCreator(data);
+    console.log(formatedData)
     
     this.setState({
       data:formatedData
