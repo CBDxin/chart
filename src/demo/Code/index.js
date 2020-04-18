@@ -37,7 +37,11 @@ class Code extends React.Component {
 		});
 		this.editor.setValue(this.props.content || "code goes here...");
 		this.editor.setSize(undefined, 700);
-	}
+  }
+  
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this.editor.setValue(nextProps.content || "code goes here...");
+  }
 
 	render() {
 		return (

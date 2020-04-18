@@ -5,7 +5,6 @@ import { Menu } from "antd";
 import "./index.less"
 
 import ChartsDemo from './ChartsDemo';
-import ComponentsDemo from "./ComponentsDemo";
 import COVIDDemo from "./COVIDDemo";
 
 const MIStyle = {
@@ -42,17 +41,13 @@ class Demo extends Component {
             }}
 					>
 						<Menu.Item style={MIStyle} key="charts">
-							<Link className="link" to="/charts">可视化图形表格示例</Link>
-						</Menu.Item>
-						<Menu.Item style={MIStyle} key="components">
-							<Link className="link" to="/components">交互组件示例</Link>
+							<Link className="link" to="/">可视化图形表格示例</Link>
 						</Menu.Item>
             <Menu.Item style={MIStyle} key="demo">
 							<Link className="link" to="/demo">新冠疫情数据应用</Link>
 						</Menu.Item>
 					</Menu>
-					<Route path="/charts" component={ChartsDemo}></Route>
-					<Route path="/components" component={ComponentsDemo}></Route>
+					<Route path="/" exact component={ChartsDemo}></Route>
           <Route path="/demo" component={COVIDDemo}></Route>
 				</div>
 			</Router>

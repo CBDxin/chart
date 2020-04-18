@@ -57,14 +57,12 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 	Object.keys(data.range).map((rangeItem) => {
 
 		let length = dataSet.domain.length
-		console.log(data.range[rangeItem].length, length)
 		if(data.range[rangeItem].length > length){
 			data.range[rangeItem] = data.range[rangeItem].splice(0, length)
 		}else if(data.range[rangeItem].length < length){
 			let arr = new Array(length - data.range[rangeItem].length);
 			arr.fill(0);
 			data.range[rangeItem] = [...data.range[rangeItem], ...arr]
-			console.log(1111111111)
 		}
 
 		data.data[rangeItem] = [] 
