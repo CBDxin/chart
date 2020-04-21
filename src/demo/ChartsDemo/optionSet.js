@@ -139,4 +139,48 @@ export default {
       }
     }`
   },
+  TreeMap: {
+		name: "矩阵树图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"TreeMap",
+          "name":"矩阵树图",
+          "key":"TreeMap",
+          "data":{
+            "name":"all",
+            "children":[
+              {
+                "name":"1",
+                "children":[
+                  {
+                    "name":"1-1",
+                    "value":2
+                  },
+                  {
+                    "name":"1-2",
+                    "value":3
+                  }
+                ]
+              },
+              {
+                "name":"2",
+                "value":3
+              },
+              {
+                "name":"3",
+                "value":5
+              },
+              {
+                "name":"4",
+                "value":8
+              }
+            ]
+          }
+        }
+      ]
+    }`
+  },
 };

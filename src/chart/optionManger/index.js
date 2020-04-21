@@ -2,7 +2,6 @@ import Charts from "../charts";
 import Components from "../components";
 import { color3 } from "../util/color";
 import { scale } from "../components/Scale";
-import { format } from "prettier";
 
 let defaultPadding = {
 	top:40,
@@ -45,6 +44,10 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		data: [],
 	};
 
+	if(!dataSet){
+		return {};
+	}
+
 	if(brushIndexs){
 		data.domain = dataSet.domain.slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
 		Object.keys(dataSet.range).map(item=>{
@@ -84,6 +87,10 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 
 let createScale = (chartData, wrapperStyle, hasBar) => {
 	const { padding, width, height} = wrapperStyle;
+
+	if(!chartData.range){
+		return {}
+	}
 
 	let rangeData = [];
 	Object.keys(chartData.range).map(rangeItem => {

@@ -109,7 +109,7 @@ export default class Chart extends Component {
 			brushIndexs
 		} = this.state;
 
-		if (!chartData || chartData.domain.length <= 1) {
+		if (!charts) {
 			return;
 		}
 
@@ -118,17 +118,17 @@ export default class Chart extends Component {
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
 
-			// console.log(chartData.data[item.key])
+			// console.log(item)
 			// console.log('-----activeTickItem', activeTickItem)
 
 			return (
 				Chart &&
-				chartData.data[item.key] && (
+				(item.data || chartData.data[item.key]) && (
 					<Chart
 						option={item}
 						key={index}
 						colorScale={colorScale}
-						data={chartData.data[item.key]}
+						data={item.data || chartData.data[item.key]}
 						xScale={xScale}
 						yScale={yScale}
 						wrapperStyle={wrapperStyle}
