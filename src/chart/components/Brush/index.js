@@ -14,20 +14,20 @@ class Brush extends Component {
   }
 
   componentWillMount(){
-    this.getBrushScale(this.props, ()=>{
-      let {startIndex, endIndex} = this.props.option;
-      let { brushScale } = this.state;
-      if(startIndex && endIndex){
-        this.setState({
-          x0OfSlider:brushScale.invertExtent(startIndex)[0],
-          x1OfSlider:brushScale.invertExtent(endIndex)[0]
-        }, this.updateBrushIndex)
-      }
-    });
+    this.getBrushScale(this.props);
   }
 
   componentDidMount(){
-    this.updateBrushIndex()
+    let {option:{startIndex, endIndex}} = this.props;
+      let { brushScale } = this.state;
+      if(startIndex && endIndex){
+        this.setState({
+          x0OfSlider:brushScale.invertExtent(startIndex - 1)[0],
+          x1OfSlider:brushScale.invertExtent(endIndex - 1)[0]
+        }, this.updateBrushIndex)
+      }else{
+        this.updateBrushIndex()
+      }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
@@ -46,12 +46,12 @@ class Brush extends Component {
 		let { x0OfSlider, x1OfSlider } = this.state;
 		let { wrapperStyle } = this.props;
 		let x = Math.min(x0OfSlider, x1OfSlider);
-		let width = Math.abs(x0OfSlider - x1OfSlider);
+    let width = Math.abs(x0OfSlider - x1OfSlider);
 
 		return (
 			<rect
 				onMouseDown={(event)=>this.handleClickSlider(event, "Slider")}
-				y={wrapperStyle.height - 30}
+				y={wrapperStyle.height - 40}
 				x={x}
 				width={width}
 				height={30}
@@ -70,7 +70,7 @@ class Brush extends Component {
 				<circle
           onMouseDown={(event)=>this.handleClickSlider(event, "x0")}
 					cx={x0OfSlider}
-					cy={wrapperStyle.height - 30 + 15}
+					cy={wrapperStyle.height - 40 + 15}
 					r={13}
 					fill="#fff"
 					stroke="darkgray"
@@ -79,7 +79,7 @@ class Brush extends Component {
 				<circle
           onMouseDown={(event)=>this.handleClickSlider(event, "x1")}
 					cx={x1OfSlider}
-					cy={wrapperStyle.height - 30 + 15}
+					cy={wrapperStyle.height - 40 + 15}
 					r={13}
 					fill="#fff"
 					stroke="darkgray"
@@ -90,7 +90,7 @@ class Brush extends Component {
   
   updateBrushIndex = ()=>{
     let {x0OfSlider, x1OfSlider, brushScale} = this.state;
-    // console.log(brushScale.invertExtent(1))
+    // console.log(x1OfSlider ,Math.max(brushScale(x0OfSlider), brushScale(x1OfSlider)))
     this.props.updateBrushIndex({
       startIndex:Math.min(brushScale(x0OfSlider), brushScale(x1OfSlider)),
       endIndex:Math.max(brushScale(x0OfSlider), brushScale(x1OfSlider))
@@ -193,7 +193,7 @@ class Brush extends Component {
 			<g>
 				<rect
 					x={wrapperStyle.padding.left}
-					y={wrapperStyle.height - 30}
+					y={wrapperStyle.height - 40}
 					height={30}
 					width={wrapperStyle.width - wrapperStyle.padding.left - wrapperStyle.padding.right}
 					fill={"#fff"}

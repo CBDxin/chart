@@ -16,14 +16,16 @@ export let getStateByOption = (option, brushIndexs) => {
 	let wrapperStyle = {
 		height: option.height || 500,
 		width: option.width || 800,
-		padding: option.padding ? {...option.padding} : {...defaultPadding},
+		padding: option.padding ? {...defaultPadding ,...option.padding} : {...defaultPadding},
 	};
 
 	if(hasType(option.components, "Brush")){
-		wrapperStyle.padding.bottom = wrapperStyle.padding.bottom + 30;
+		wrapperStyle.padding.bottom = wrapperStyle.padding.bottom + 40;
 	}
+
+	let hasBar = hasType(option.charts, "Bar") ? true : false;
 	
-	let scaleMap = createScale(chartData, wrapperStyle);
+	let scaleMap = createScale(chartData, wrapperStyle, hasBar);
 	let colorScale = createColorScale(option.charts);
 
 	return {
@@ -47,7 +49,6 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		data.domain = dataSet.domain.slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
 		Object.keys(dataSet.range).map(item=>{
 			data.range[item] = dataSet.range[item].slice(brushIndexs.startIndex, brushIndexs.endIndex + 1);
-			// console.log(dataSet)
 		})
 	}else{
 		data.domain = dataSet.domain
@@ -76,12 +77,12 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		});
 	});
 
-	console.log(data)
+	// console.log(data)
 
 	return data;
 };
 
-let createScale = (chartData, wrapperStyle) => {
+let createScale = (chartData, wrapperStyle, hasBar) => {
 	const { padding, width, height} = wrapperStyle;
 
 	let rangeData = [];
@@ -89,7 +90,7 @@ let createScale = (chartData, wrapperStyle) => {
 		rangeData = [...rangeData, ...chartData.range[rangeItem]]
 	});
 
-	let xScale = Components.scale(chartData.domain, [padding.left, width - padding.right], "band");
+	let xScale = Components.scale(chartData.domain, [padding.left, width - padding.right], hasBar ? "bandWithPadding" : "band");
 	let yScale = Components.scale(
 		[0, Math.max(...rangeData) * 1.2],
 		[height - padding.bottom, padding.top]

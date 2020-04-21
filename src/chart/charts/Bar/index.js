@@ -1,7 +1,7 @@
 import React from "react";
 import BaseShape from "../BaseShape";
 
-const WIDTH = 0.3;
+const WIDTH = 0.4;
 
 class Bar extends BaseShape {
 	constructor(props) {
@@ -39,7 +39,7 @@ class Bar extends BaseShape {
 						height={wrapperStyle.height - wrapperStyle.padding.bottom - item.y}
 						width={width}
 						opacity={
-							(activeTickItem && index === activeTickItem.activeIndex) || isActive ? 0.8 : 0.5
+							(activeTickItem && index === activeTickItem.activeIndex) || isActive ? 0.6 : 0.9
 						}
 						fill={
 							isUnActive

@@ -80,7 +80,8 @@ export default class Chart extends Component {
 	}
 
 	initViewBox = (props) => {
-		let { option, brushIndexs } = props && props.option ? props : this.props;
+		let { option } = props && props.option ? props : this.props;
+		let {brushIndexs} = this.state;
 		let height = this.box.current ? this.box.current.clientHeight : this.state.wrapperStyle.height;
 		let width = this.box.current ? this.box.current.clientWidth : this.state.wrapperStyle.width;
 		this.setState(
@@ -89,7 +90,7 @@ export default class Chart extends Component {
 				...getStateByOption({ ...option, height: height, width: width }, brushIndexs)
 			},
 			() => {
-				console.log(this.state);
+				// console.log(this.state);
 			}
 		);
 	};
@@ -383,7 +384,7 @@ export default class Chart extends Component {
 
 	render() {
 		const { width = 800, height = 500 } = this.props.option;
-		console.log("render");
+		// console.log("render");
 		return (
 			<div
 				className="view-box"
