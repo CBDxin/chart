@@ -28,3 +28,8 @@ export let transition = (animation, duration)=>{
   })
 }
 
+export let sumArr =  (arr)=>{
+  return arr.reduce(function(prev,cur){
+      return prev + cur;
+  },0);
+}

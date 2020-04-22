@@ -59,6 +59,41 @@ export default {
       }
     }`
   },
+  BarStack: {
+		name: "柱状图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"BarStack",
+          "name":"柱状图",
+          "key":"BarStack"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "BarStack":{
+            "a":[300,500,400,20,600,900],
+            "b":[300,500,400,20,600,900],
+            "c":[300,500,400,20,600,900],
+            "d":[300,500,400,20,600,900]
+          }
+        }
+      }
+    }`
+  },
   Line: {
 		name: "折线图",
 		option: `{
