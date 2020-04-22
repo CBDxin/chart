@@ -1,4 +1,5 @@
 import Area from "./Area";
+import AreaStack from "./AreaStack";
 import Bar from "./Bar";
 import BarStack from "./BarStack";
 import Line from "./Line";
@@ -9,6 +10,7 @@ import Tree from "./Tree";
 
 export default {
   Area,
+  AreaStack,
   Bar,
   BarStack,
   Line,

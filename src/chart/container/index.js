@@ -1,6 +1,7 @@
 import Bar from "./BarChart";
 import BarStack from "./BarStack";
 import Area from "./AreaChart";
+import AreaStack from "./AreaStackChart";
 import Line from "./LineChart";
 import Scatter from "./ScatterChart";
 
@@ -12,6 +13,7 @@ export default {
   Bar,
   BarStack,
   Area,
+  AreaStack,
   Line,
   Scatter,
   Pie,

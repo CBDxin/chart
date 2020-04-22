@@ -16,7 +16,7 @@ class BarStack extends BaseShape {
 	}
 
 	animation = (precent, props) => {
-		let { data, wrapperStyle:{height, padding} } = props;
+		let { data } = props;
 		let { preData } = this.state;
 
 		if (precent > 1) {

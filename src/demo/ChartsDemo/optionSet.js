@@ -29,6 +29,41 @@ export default {
       }
     }`
   },
+  AreaStack: {
+		name: "图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"AreaStack",
+          "name":"图",
+          "key":"AreaStack"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "AreaStack":{
+            "a":[300,500,400,20,600,900],
+            "b":[300,500,400,20,600,900],
+            "c":[300,500,400,20,600,900],
+            "d":[300,500,400,20,600,900]
+          }
+        }
+      }
+    }`
+  },
   Bar: {
 		name: "柱状图",
 		option: `{
