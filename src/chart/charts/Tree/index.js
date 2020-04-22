@@ -83,7 +83,7 @@ class Tree extends BaseShape {
 	}
 
 	render() {
-		let { cx = this.props.wrapperStyle.width * 0.2, cy = this.props.wrapperStyle.height * 0.5 } = this.props;
+		let { cx = this.props.wrapperStyle.width * 0.2, cy = this.props.wrapperStyle.height * 0.2 } = this.props;
 
 		let style = {
 			transform: `translate(${cx}px,${cy}px)`,

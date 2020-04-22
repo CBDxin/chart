@@ -25,11 +25,7 @@ class TreeChart extends Component {
 		} = props || this.props;
 
 		let root = hierarchy(data).sum(d => d.value);
-
-		let treeCreator = tree().nodeSize([
-			(height * 0.6) / root.children.length,
-			(width * 0.6) / root.height,
-		]);
+		let treeCreator = tree().size([height * 0.6, width * 0.6]);
 		let _tree = treeCreator(root);
 
 		this.setState({
