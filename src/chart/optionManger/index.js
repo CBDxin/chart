@@ -44,7 +44,7 @@ let formaDataSet =  (dataSet, brushIndexs) => {
 		data: [],
 	};
 
-	if(!dataSet){
+	if(!dataSet || !dataSet.domain || !dataSet.range){
 		return {};
 	}
 
@@ -109,7 +109,7 @@ let createScale = (chartData, wrapperStyle, hasBar) => {
 	};
 };
 
-let createColorScale = (charts)=>{
+let createColorScale = (charts = [])=>{
 	let chartKeys = charts.map(item=>item.key)
 	return Components.scale(chartKeys, color3, "ordinal")
 }

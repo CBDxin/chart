@@ -54,7 +54,7 @@ class TreeMap extends BaseShape {
 		});
 	};
 
-	createArcs = props => {
+	createRects = props => {
 		let { cx = this.props.wrapperStyle.width * 0.2, cy = this.props.wrapperStyle.height * 0.2 } =
 			props || this.props;
 
@@ -90,16 +90,10 @@ class TreeMap extends BaseShape {
 					))}
 			</g>
 		);
-
-		// return data.map((item, index) => {
-		// 	return (
-
-		// 	);
-		// });
 	};
 
 	render() {
-		return <g>{this.createArcs()}</g>;
+		return <g>{this.createRects()}</g>;
 	}
 }
 

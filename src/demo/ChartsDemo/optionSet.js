@@ -183,4 +183,48 @@ export default {
       ]
     }`
   },
+  Tree: {
+		name: "树图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Tree",
+          "name":"树图",
+          "key":"Tree",
+          "data":{
+            "name":"all",
+            "children":[
+              {
+                "name":"1",
+                "children":[
+                  {
+                    "name":"1-1",
+                    "value":2
+                  },
+                  {
+                    "name":"1-2",
+                    "value":3
+                  }
+                ]
+              },
+              {
+                "name":"2",
+                "value":3
+              },
+              {
+                "name":"3",
+                "value":5
+              },
+              {
+                "name":"4",
+                "value":8
+              }
+            ]
+          }
+        }
+      ]
+    }`
+  },
 };

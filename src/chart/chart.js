@@ -123,7 +123,7 @@ export default class Chart extends Component {
 
 			return (
 				Chart &&
-				(item.data || chartData.data[item.key]) && (
+				(item.data || chartData.data && chartData.data[item.key]) && (
 					<Chart
 						option={item}
 						key={index}

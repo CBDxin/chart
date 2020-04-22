@@ -4,6 +4,7 @@ import Line from "./Line";
 import Scatter from "./Scatter";
 import Pie from "./Pie"
 import TreeMap from "./TreeMap"
+import Tree from "./Tree";
 
 export default {
   Area,
@@ -11,5 +12,6 @@ export default {
   Line,
   Scatter,
   Pie,
-  TreeMap
+  TreeMap,
+  Tree
 }

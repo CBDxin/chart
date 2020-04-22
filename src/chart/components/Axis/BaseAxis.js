@@ -33,7 +33,7 @@ class BaseAxis extends Component {
 
 	getRenderIndex = props => {
 		const { data } = props || this.props;
-		if (data.length > 10) {
+		if (data && data.length > 10) {
 			this.renderIndex = parseInt(data.length / 10);
 		} else {
 			this.renderIndex = null;

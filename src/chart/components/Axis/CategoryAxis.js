@@ -43,7 +43,7 @@ class CategoryAxis extends BaseAxis {
 	}
 
 	getTickItems = (props) => {
-		const { data, scale } = props || this.props;
+		const { data = [], scale } = props || this.props;
 		let tickItems = data.map(tickData => {
 			let tick = scale(tickData);
 			return {

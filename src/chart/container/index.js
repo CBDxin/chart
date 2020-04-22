@@ -5,6 +5,7 @@ import Scatter from "./ScatterChart";
 
 import Pie from "./PieChart"
 import TreeMap from "./TreeMapChart";
+import Tree from "./TreeChart";
 
 export default {
   Bar,
@@ -12,5 +13,6 @@ export default {
   Line,
   Scatter,
   Pie,
-  TreeMap
+  TreeMap,
+  Tree
 }
