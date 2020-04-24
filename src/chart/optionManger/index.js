@@ -22,7 +22,7 @@ export let getStateByOption = (option, brushIndexs) => {
 		wrapperStyle.padding.bottom = wrapperStyle.padding.bottom + 40;
 	}
 
-	let hasBar = hasType(option.charts, "Bar") || hasType(option.charts, "BarStack") ? true : false;
+	let hasBar = hasType(option.charts, "Bar") || hasType(option.charts, "BarStack") || hasType(option.charts, "BarGroup") ? true : false;
 
 	let scaleMap = createScale(chartData, wrapperStyle, hasBar);
 	let colorScale = createColorScale(option.charts);
@@ -109,7 +109,7 @@ let createScale = (chartData, wrapperStyle, hasBar) => {
 	let rangeData = [];
 	Object.keys(chartData.range).map(rangeItem => {
 		if (Array.isArray(chartData.range[rangeItem])) {
-			rangeData = [...rangeData, ...chartData.range[rangeItem]];
+			rangeData = [...rangeData, ...flat(chartData.range[rangeItem])];
 		} else {//stack
 			let sumArr = []
 			Object.keys(chartData.range[rangeItem]).map(item => {
@@ -173,3 +173,10 @@ export let getMapScales = mappers => {
 
 	return mapScales;
 };
+
+let flat = (arr) => {
+	while (arr.some(item => Array.isArray(item))) {
+			arr = [].concat(...arr);
+	}
+	return arr;
+}

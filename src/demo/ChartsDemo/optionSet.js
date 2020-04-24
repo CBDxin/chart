@@ -129,6 +129,36 @@ export default {
       }
     }`
   },
+  BarGroup: {
+		name: "柱状图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"BarGroup",
+          "name":"柱状图",
+          "key":"BarGroup"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "BarGroup":[[150,800,500],[100,300,500],[500,70,400],[800,200,550],[1000,300,300],[200,800,200]]
+        }
+      }
+    }`
+  },
   Line: {
 		name: "折线图",
 		option: `{
