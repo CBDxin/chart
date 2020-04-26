@@ -239,6 +239,26 @@ export default {
       }
     }`
   },
+  Radar: {
+		name: "雷达图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Radar",
+          "name":"雷达图",
+          "key":"Radar"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "Radar":[300,500,400,20,600,900]
+        }
+      }
+    }`
+  },
   TreeMap: {
 		name: "矩阵树图",
 		option: `{

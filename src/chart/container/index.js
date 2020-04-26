@@ -6,7 +6,8 @@ import AreaStack from "./AreaStackChart";
 import Line from "./LineChart";
 import Scatter from "./ScatterChart";
 
-import Pie from "./PieChart"
+import Pie from "./PieChart";
+import Radar from "./RadarChart";
 import TreeMap from "./TreeMapChart";
 import Tree from "./TreeChart";
 
@@ -19,6 +20,7 @@ export default {
   Line,
   Scatter,
   Pie,
+  Radar,
   TreeMap,
   Tree
 }

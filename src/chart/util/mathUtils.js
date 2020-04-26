@@ -1,5 +1,7 @@
 import { timer } from "d3";
 
+export const RADIAN = Math.PI / 180;
+
 export function random(n) {
   if (n > 21) return null
   return parseInt((Math.random()) * Math.pow(10,n))
@@ -33,3 +35,8 @@ export let sumArr =  (arr)=>{
       return prev + cur;
   },0);
 }
+
+export const polarToCartesian = (cx, cy, radius, angle) => ({
+  x: cx + Math.sin(RADIAN * angle) * radius,
+  y: cy - Math.cos(RADIAN * angle) * radius,
+});
