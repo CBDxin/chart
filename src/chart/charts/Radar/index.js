@@ -1,5 +1,6 @@
 import React from "react";
 import BaseShape from "../BaseShape";
+import Line from "../../shape/Line";
 import { interpolateNumber } from "d3";
 import { polarToCartesian } from "../../util/mathUtils";
 
@@ -22,9 +23,9 @@ class Radar extends BaseShape {
 		}
 
 		let nextData = data.map((item, index) => {
-			const interpolatorAngle = interpolateNumber(preData ? preData[index].angle : 0, item.angle);
+			const interpolatorAngle = interpolateNumber(preData && preData[index] ? preData[index].angle : 0, item.angle);
 			const interpolatorRadius = interpolateNumber(
-				preData ? preData[index].radius : 0,
+				preData && preData[index] ? preData[index].radius : 0,
 				item.radius
 			);
 			return {
@@ -41,6 +42,33 @@ class Radar extends BaseShape {
 		});
 	};
 
+	renderPolarAxis = (props)=>{
+		let {
+			option:{maxRadius = 100},
+			cx = this.props.wrapperStyle.width / 2,
+			cy = this.props.wrapperStyle.height / 2,
+		} = props || this.props;
+		let { data } = this.state;
+		let points = "", lines = [];	
+
+		data && data.map(item => {
+			let coordinate = polarToCartesian(cx, cy, maxRadius, item.angle);
+			points = points + coordinate.x + "," + coordinate.y + " ";
+			lines.push([{x:cx,y:cy},{x:coordinate.x, y:coordinate.y}]);
+		});
+
+		return data && <g>
+			<polygon
+					points={points}
+					stroke={"grey"}
+					fill="none"
+				/>
+			{lines.map((item, index)=>(
+				<Line key={index} data={item} color={"grey"}></Line>	
+			))}
+		</g>
+	}
+
 	renderRadar = props => {
 		let {
 			colorScale,
@@ -49,9 +77,8 @@ class Radar extends BaseShape {
 			cy = this.props.wrapperStyle.height / 2,
 		} = props || this.props;
 		let points = "";
-
 		let { data } = this.state;
-		console.log(Math.cos(0))
+
 		data && data.map(item => {
 			let coordinate = polarToCartesian(cx, cy, item.radius, item.angle);
 			points = points + coordinate.x + "," + coordinate.y + " ";
@@ -63,14 +90,18 @@ class Radar extends BaseShape {
 				<polygon
 					points={points}
 					stroke={colorScale(option.key)}
-					fill="none"
+					fill={colorScale(option.key)}
+					opacity={0.8}
 				/>
 			)
 		);
 	};
 
 	render() {
-		return <g>{this.renderRadar()}</g>;
+		return <g>
+			{this.renderPolarAxis()}
+			{this.renderRadar()}
+			</g>;
 	}
 }
 

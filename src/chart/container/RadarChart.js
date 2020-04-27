@@ -6,7 +6,9 @@ class RadarChart extends Component{
   constructor(props){
     super(props);
     this.state={
-      data:null
+      data:null,
+      radiusScale:null,
+      angleScale:null
     }
   }
 
@@ -41,12 +43,15 @@ class RadarChart extends Component{
     }))
     
     this.setState({
-      data:formatedData
+      data:formatedData,
+      radiusScale,
+      angleScale
     })
   }
 
   render(){
-    return <Radar {...this.props} data={this.state.data}></Radar>
+    let {radiusScale, angleScale} = this.state;
+    return <Radar {...this.props} data={this.state.data} radiusScale={radiusScale} angleScale={angleScale}></Radar>
   }
 }
 
