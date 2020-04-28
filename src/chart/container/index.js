@@ -12,6 +12,8 @@ import Radar from "./RadarChart";
 import TreeMap from "./TreeMapChart";
 import Tree from "./TreeChart";
 
+import Geo from "./GeoChart";
+
 export default {
   Bar,
   BarGroup,
@@ -24,5 +26,6 @@ export default {
   PolarScatter,
   Radar,
   TreeMap,
-  Tree
+  Tree,
+  Geo
 }

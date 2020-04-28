@@ -2,7 +2,7 @@ import React, { Component, createRef } from "react";
 import { Menu, Button } from "antd";
 import Code from "../Code";
 import Chart from "../../chart/chart";
-import optionSet from "./optionSet"
+import optionSet from "./optionSet";
 
 import "./index.less";
 

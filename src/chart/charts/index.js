@@ -9,6 +9,7 @@ import PolarScatter from "./PolarScatter";
 import Radar from "./Radar";
 import TreeMap from "./TreeMap"
 import Tree from "./Tree";
+import Geo from "./Geo";
 
 export default {
   Area,
@@ -21,5 +22,6 @@ export default {
   PolarScatter,
   Radar,
   TreeMap,
-  Tree
+  Tree,
+  Geo
 }
