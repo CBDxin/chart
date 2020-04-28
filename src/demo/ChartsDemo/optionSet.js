@@ -239,6 +239,26 @@ export default {
       }
     }`
   },
+  PolarScatter: {
+		name: "雷达图",
+		option: `{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"PolarScatter",
+          "name":"雷达图",
+          "key":"PolarScatter"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "PolarScatter":[300,500,400,20,600,900]
+        }
+      }
+    }`
+  },
   Radar: {
 		name: "雷达图",
 		option: `{

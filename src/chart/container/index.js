@@ -7,6 +7,7 @@ import Line from "./LineChart";
 import Scatter from "./ScatterChart";
 
 import Pie from "./PieChart";
+import PolarScatter from "./PolarScatterChart"
 import Radar from "./RadarChart";
 import TreeMap from "./TreeMapChart";
 import Tree from "./TreeChart";
@@ -20,6 +21,7 @@ export default {
   Line,
   Scatter,
   Pie,
+  PolarScatter,
   Radar,
   TreeMap,
   Tree

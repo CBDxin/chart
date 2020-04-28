@@ -5,6 +5,7 @@ import BarStack from "./BarStack";
 import Line from "./Line";
 import Scatter from "./Scatter";
 import Pie from "./Pie";
+import PolarScatter from "./PolarScatter";
 import Radar from "./Radar";
 import TreeMap from "./TreeMap"
 import Tree from "./Tree";
@@ -17,6 +18,7 @@ export default {
   Line,
   Scatter,
   Pie,
+  PolarScatter,
   Radar,
   TreeMap,
   Tree

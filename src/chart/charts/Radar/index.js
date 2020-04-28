@@ -23,7 +23,7 @@ class Radar extends BaseShape {
 		}
 
 		let nextData = data.map((item, index) => {
-			const interpolatorAngle = interpolateNumber(preData && preData[index] ? preData[index].angle : 0, item.angle);
+			const interpolatorAngle = interpolateNumber(preData && preData[index] ? preData[index].angle : item.angle, item.angle);
 			const interpolatorRadius = interpolateNumber(
 				preData && preData[index] ? preData[index].radius : 0,
 				item.radius
