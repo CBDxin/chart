@@ -27,9 +27,9 @@ export default {
           "Area":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  AreaStack: {
+    }`,
+	},
+	AreaStack: {
 		name: "图",
 		option: `{
       "height": 700,
@@ -62,9 +62,9 @@ export default {
           }
         }
       }
-    }`
-  },
-  Bar: {
+    }`,
+	},
+	Bar: {
 		name: "柱状图",
 		option: `{
       "height": 700,
@@ -92,9 +92,9 @@ export default {
           "Bar":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  BarStack: {
+    }`,
+	},
+	BarStack: {
 		name: "柱状图",
 		option: `{
       "height": 700,
@@ -127,9 +127,9 @@ export default {
           }
         }
       }
-    }`
-  },
-  BarGroup: {
+    }`,
+	},
+	BarGroup: {
 		name: "柱状图",
 		option: `{
       "height": 700,
@@ -157,9 +157,9 @@ export default {
           "BarGroup":[[150,800,500],[100,300,500],[500,70,400],[800,200,550],[1000,300,300],[200,800,200]]
         }
       }
-    }`
-  },
-  Line: {
+    }`,
+	},
+	Line: {
 		name: "折线图",
 		option: `{
       "height": 700,
@@ -187,11 +187,12 @@ export default {
           "Line":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  Scatter: {
+    }`,
+	},
+	Scatter: {
 		name: "散点图",
-		option: `{
+		option: `
+    {
       "height": 700,
       "width": "100%",
       "charts":[
@@ -217,9 +218,9 @@ export default {
           "Scatter":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  Pie: {
+    }`,
+	},
+	Pie: {
 		name: "饼图",
 		option: `{
       "height": 700,
@@ -237,9 +238,9 @@ export default {
           "Pie":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  PolarScatter: {
+    }`,
+	},
+	PolarScatter: {
 		name: "雷达图",
 		option: `{
       "height": 700,
@@ -257,9 +258,9 @@ export default {
           "PolarScatter":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  Radar: {
+    }`,
+	},
+	Radar: {
 		name: "雷达图",
 		option: `{
       "height": 700,
@@ -277,9 +278,9 @@ export default {
           "Radar":[300,500,400,20,600,900]
         }
       }
-    }`
-  },
-  TreeMap: {
+    }`,
+	},
+	TreeMap: {
 		name: "矩阵树图",
 		option: `{
       "height": 700,
@@ -321,11 +322,57 @@ export default {
           }
         }
       ]
-    }`
-  },
-  Geo: {
+    }`,
+	},
+	Tree: {
 		name: "树图",
-		option: `{
+    option: `
+    {
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Tree",
+          "name":"树图",
+          "key":"Tree",
+          "data":{
+            "name":"all",
+            "children":[
+              {
+                "name":"1",
+                "children":[
+                  {
+                    "name":"1-1",
+                    "value":2
+                  },
+                  {
+                    "name":"1-2",
+                    "value":3
+                  }
+                ]
+              },
+              {
+                "name":"2",
+                "value":3
+              },
+              {
+                "name":"3",
+                "value":5
+              },
+              {
+                "name":"4",
+                "value":8
+              }
+            ]
+          }
+        }
+      ]
+    }`,
+	},
+	Geo: {
+		name: "树图",
+    option: `
+    {
       "height": 700,
       "width": "100%",
       "charts":[
@@ -338,6 +385,6 @@ export default {
           }
         }
       ]
-    }`
-  },
+    }`,
+	},
 };
