@@ -6,7 +6,7 @@ npm run start
 ~~~
 
 声明式配置语法
-`
+```
 {
   height: 700,
   width: "100%",
@@ -34,7 +34,7 @@ npm run start
     }
   }
 }
-`
+```
 
 可视化图表：
 1. Area,
