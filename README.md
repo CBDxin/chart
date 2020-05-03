@@ -6,16 +6,18 @@ npm run start
 ~~~
 
 可视化图表：
-1. Line
-<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Line.png"/>
-2. Area
-<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Area.png"/>
-3. Bar
-<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Bar.png"/>
-4. Scatter
-<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Scatter.png"/>
-5. Pie
-<img width="350" src="https://github.com/CBDxin/chart/blob/master/public/image/Pie.png"/>
+1. Area,
+2. AreaStack,
+3. Bar,
+4. BarStack,
+5. Line,
+6. Scatter,
+7. Pie,
+8. PolarScatter,
+9. Radar,
+10. TreeMap,
+11. Tree,
+12. Geo
 
 可视化组件：
 1. Scale
@@ -25,3 +27,4 @@ npm run start
 5. Grid
 6. Legend
 7. LinearGradient
+8. VisualMap
