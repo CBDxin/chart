@@ -27,7 +27,7 @@ export default {
           "Area":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	AreaStack: {
 		name: "图",
@@ -62,7 +62,7 @@ export default {
           }
         }
       }
-    }`,
+    }`
 	},
 	Bar: {
 		name: "柱状图",
@@ -92,7 +92,7 @@ export default {
           "Bar":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	BarStack: {
 		name: "柱状图",
@@ -127,7 +127,7 @@ export default {
           }
         }
       }
-    }`,
+    }`
 	},
 	BarGroup: {
 		name: "柱状图",
@@ -157,7 +157,7 @@ export default {
           "BarGroup":[[150,800,500],[100,300,500],[500,70,400],[800,200,550],[1000,300,300],[200,800,200]]
         }
       }
-    }`,
+    }`
 	},
 	Line: {
 		name: "折线图",
@@ -187,7 +187,7 @@ export default {
           "Line":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	Scatter: {
 		name: "散点图",
@@ -218,7 +218,7 @@ export default {
           "Scatter":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	Pie: {
 		name: "饼图",
@@ -238,7 +238,7 @@ export default {
           "Pie":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	PolarScatter: {
 		name: "雷达图",
@@ -258,7 +258,7 @@ export default {
           "PolarScatter":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	Radar: {
 		name: "雷达图",
@@ -278,7 +278,7 @@ export default {
           "Radar":[300,500,400,20,600,900]
         }
       }
-    }`,
+    }`
 	},
 	TreeMap: {
 		name: "矩阵树图",
@@ -322,7 +322,7 @@ export default {
           }
         }
       ]
-    }`,
+    }`
 	},
 	Tree: {
 		name: "树图",
@@ -367,7 +367,7 @@ export default {
           }
         }
       ]
-    }`,
+    }`
 	},
 	Geo: {
 		name: "树图",
@@ -385,6 +385,6 @@ export default {
           }
         }
       ]
-    }`,
-	},
+    }`
+	}
 };

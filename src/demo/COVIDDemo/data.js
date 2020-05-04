@@ -21996,10 +21996,10 @@ let data4 = [
 		nowConfirmCompare: 4757,
 		healCompare: 19,
 		deadCompare: 848,
-  },
-  {
-    name:"中国",
-    confirm: 84180,
+	},
+	{
+		name: "中国",
+		confirm: 84180,
 		heal: 77744,
 		dead: 4642,
 		nowConfirm: 1794,
@@ -22007,7 +22007,7 @@ let data4 = [
 		nowSevere: 85,
 		importedCase: 1566,
 		noInfect: 1017,
-  },
+	},
 	{
 		name: "伊朗",
 		continent: "亚洲",
@@ -30841,28 +30841,28 @@ export let getOption1 = () => {
 
 	return {
 		height: 500,
-    width: 800,
-    padding:{
-      top:50,
-      bottom:30,
-      left:60,
-      right:50
-    },
+		width: 800,
+		padding: {
+			top: 50,
+			bottom: 30,
+			left: 60,
+			right: 50,
+		},
 		charts: [
 			{
 				type: "Bar",
 				name: "确诊排行",
-        key: "confirm",
-        VisualMap: {
-          orient: "vertical",
-          text: ["高", "低"],
-          mappers: {
-            color: {
-              range: ['#fff176', '#f44336'],
-              data:deadList
-            }
-          },
-        },
+				key: "confirm",
+				VisualMap: {
+					orient: "vertical",
+					text: ["高", "低"],
+					mappers: {
+						color: {
+							range: ["#fff176", "#f44336"],
+							data: deadList,
+						},
+					},
+				},
 			},
 		],
 		components: [
@@ -30891,29 +30891,30 @@ export let getOption1 = () => {
 	};
 };
 
-export let countryList = Object.keys(data5)
+export let countryList = Object.keys(data5);
 
-export let getOption2 = (key)=>{
-  let dateList = [], confirmList = [];
-  data5[key].map(item=>{
-    confirmList.push(item.confirm);
-    dateList.push(item.date);
-  })
+export let getOption2 = key => {
+	let dateList = [],
+		confirmList = [];
+	data5[key].map(item => {
+		confirmList.push(item.confirm);
+		dateList.push(item.date);
+	});
 
-  return {
+	return {
 		height: 500,
-    width: 800,
-    padding:{
-      top:50,
-      bottom:30,
-      left:60,
-      right:50
-    },
+		width: 800,
+		padding: {
+			top: 50,
+			bottom: 30,
+			left: 60,
+			right: 50,
+		},
 		charts: [
 			{
 				type: "Line",
 				name: "确诊趋势",
-        key: "confirm",
+				key: "confirm",
 			},
 		],
 		components: [
@@ -30940,44 +30941,47 @@ export let getOption2 = (key)=>{
 			},
 		},
 	};
-}
+};
 
-export let getOption3 = ()=>{
-  let dateList = [], confirmList = [], deadRateList=[], healRateList=[];
-  data7.map(item=>{
-    dateList.push(item.date);
-    confirmList.push(item.all.confirm);
-    deadRateList.push(item.all.deadRate);
-    healRateList.push(item.all.healRate);
-  })
-  return {
+export let getOption3 = () => {
+	let dateList = [],
+		confirmList = [],
+		deadRateList = [],
+		healRateList = [];
+	data7.map(item => {
+		dateList.push(item.date);
+		confirmList.push(item.all.confirm);
+		deadRateList.push(item.all.deadRate);
+		healRateList.push(item.all.healRate);
+	});
+	return {
 		height: 500,
-    width: 800,
-    padding:{
-      top:50,
-      bottom:30,
-      left:60,
-      right:50
-    },
+		width: 800,
+		padding: {
+			top: 50,
+			bottom: 30,
+			left: 60,
+			right: 50,
+		},
 		charts: [
 			{
 				type: "Scatter",
 				name: "全球多维分析",
-        key: "confirm",
-        VisualMap: {
-          orient: "vertical",
-          text: ["高", "低"],
-          mappers: {
-            color: {
-              range: ['#eeff41', '#388e3c'],
-              data:healRateList
-            },
-            radius:{
-              range:[0.5,3],
-              data:deadRateList
-            }
-          },
-        },
+				key: "confirm",
+				VisualMap: {
+					orient: "vertical",
+					text: ["高", "低"],
+					mappers: {
+						color: {
+							range: ["#eeff41", "#388e3c"],
+							data: healRateList,
+						},
+						radius: {
+							range: [0.5, 3],
+							data: deadRateList,
+						},
+					},
+				},
 			},
 		],
 		components: [
@@ -31004,51 +31008,54 @@ export let getOption3 = ()=>{
 			},
 		},
 	};
-}
+};
 
-export let getOption4 = (index)=>{
-  let nextIndex = index + 1 >= data6.length ? 0 : index + 1;
-  let countryList = [], confirmList = [];
-  countryList = Object.keys(data6[index]).splice(1).sort((a, b)=>data6[index][a] - data6[index][b]);
-  countryList.map(item=>{
-    confirmList.push(data6[index][item])
-  })
+export let getOption4 = index => {
+	let nextIndex = index + 1 >= data6.length ? 0 : index + 1;
+	let countryList = [],
+		confirmList = [];
+	countryList = Object.keys(data6[index])
+		.splice(1)
+		.sort((a, b) => data6[index][a] - data6[index][b]);
+	countryList.map(item => {
+		confirmList.push(data6[index][item]);
+	});
 
-  return{
-    date:data6[index].date,
-    nextIndex,
-    reviewOption:{
-      height: 500,
-      width: 800,
-      padding:{
-        top:50,
-        bottom:30,
-        left:60,
-        right:50
-      },
-      charts: [
-        {
-          type: "Bar",
-          name: "回顾",
-          key: "confirm",
-        },
-      ],
-      components: [
-        {
-          type: "xAxis",
-          position: "bottom",
-        },
-        {
-          type: "yAxis",
-          position: "left",
-        },
-      ],
-      dataSet: {
-        domain: countryList,
-        range: {
-          confirm: confirmList,
-        },
-      },
-    }
-  }
-}
+	return {
+		date: data6[index].date,
+		nextIndex,
+		reviewOption: {
+			height: 500,
+			width: 800,
+			padding: {
+				top: 50,
+				bottom: 30,
+				left: 60,
+				right: 50,
+			},
+			charts: [
+				{
+					type: "Bar",
+					name: "回顾",
+					key: "confirm",
+				},
+			],
+			components: [
+				{
+					type: "xAxis",
+					position: "bottom",
+				},
+				{
+					type: "yAxis",
+					position: "left",
+				},
+			],
+			dataSet: {
+				domain: countryList,
+				range: {
+					confirm: confirmList,
+				},
+			},
+		},
+	};
+};

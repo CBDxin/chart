@@ -10,8 +10,8 @@ class COVIDDemo extends Component {
 		this.state = {
 			country: "美国",
 			index: 0,
-      reviewOption: undefined,
-      date:undefined
+			reviewOption: undefined,
+			date: undefined,
 		};
 	}
 
@@ -22,11 +22,11 @@ class COVIDDemo extends Component {
 
 	getReviewOption = () => {
 		let { index } = this.state;
-    let { nextIndex, reviewOption, date } = getOption4(index);
+		let { nextIndex, reviewOption, date } = getOption4(index);
 		this.setState({
 			index: nextIndex,
-      reviewOption,
-      date
+			reviewOption,
+			date,
 		});
 	};
 
@@ -72,7 +72,7 @@ class COVIDDemo extends Component {
 					</div>
 				</div>
 				<div className="block">
-                <div className="sub-title">海外各国疫情趋势回顾 ———— {date}</div>
+					<div className="sub-title">海外各国疫情趋势回顾 ———— {date}</div>
 					{reviewOption ? (
 						<div className="chart-wrap">
 							<Chart option={reviewOption}></Chart>
