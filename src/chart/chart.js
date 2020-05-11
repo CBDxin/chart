@@ -9,6 +9,7 @@ import Charts from "./container";
 import Components from "./components";
 
 import "./index.less";
+import { animationModel } from "./util/mathUtils";
 
 /*
 state= {
@@ -67,6 +68,7 @@ export default class Chart extends Component {
 			activeCharts: [],
 			unActiveCharts: [],
 			wrapperStyle: {},
+			animation: null,
 		};
 	}
 
@@ -102,13 +104,14 @@ export default class Chart extends Component {
 			activeCharts,
 			unActiveCharts,
 			brushIndexs,
+			animation,
 		} = this.state;
 
 		if (!charts) {
 			return;
 		}
 
-		// console.log(chartData);
+		// console.log(animation);
 
 		return charts.map((item, index) => {
 			let Chart = Charts[item.type];
@@ -127,6 +130,7 @@ export default class Chart extends Component {
 						xScale={xScale}
 						yScale={yScale}
 						wrapperStyle={wrapperStyle}
+						animation={animation}
 						activeTickItem={activeTickItem}
 						brushIndexs={brushIndexs}
 						isActive={activeCharts.indexOf(item.key) === -1 ? false : true}

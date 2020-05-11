@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { interpolateNumber, timer } from "d3";
 import { getMapScales } from "../../optionManger";
+import { animationModel } from "../../util/mathUtils";
 
 class BaseChart extends Component {
 	constructor(props) {
@@ -94,10 +95,12 @@ class BaseChart extends Component {
 	};
 
 	transition = (animation, duration) => {
+		let { animation:{model = "ease"} } = this.props;
 		this.timeStamp && this.timeStamp.stop();
 		this.timeStamp = timer(elapsed => {
 			let precent = elapsed / duration;
-			animation(precent);
+			let animationPrecent = animationModel(precent, model);
+			animation(animationPrecent);
 			if (precent > 1) {
 				this.timeStamp.stop();
 				this.timeStamp = null;
@@ -106,9 +109,10 @@ class BaseChart extends Component {
 	};
 
 	renderWithAnimation = props => {
+		let { animation:{time = 500} } = this.props;
 		this.transition(precent => {
 			this.animation(precent, props || this.props);
-		}, 100);
+		}, time);
 	};
 
 	animation = (precent, props) => {

@@ -17,12 +17,21 @@ export let getStateByOption = (option, brushIndexs) => {
 		width: option.width || 800,
 		padding: option.padding ? { ...defaultPadding, ...option.padding } : { ...defaultPadding },
 	};
+	let animation = option.animation || {
+		model: "ease",
+		time: 500,
+	};
 
 	if (hasType(option.components, "Brush")) {
 		wrapperStyle.padding.bottom = wrapperStyle.padding.bottom + 40;
 	}
 
-	let hasBar = hasType(option.charts, "Bar") || hasType(option.charts, "BarStack") || hasType(option.charts, "BarGroup") ? true : false;
+	let hasBar =
+		hasType(option.charts, "Bar") ||
+		hasType(option.charts, "BarStack") ||
+		hasType(option.charts, "BarGroup")
+			? true
+			: false;
 
 	let scaleMap = createScale(chartData, wrapperStyle, hasBar);
 	let colorScale = createColorScale(option.charts);
@@ -30,6 +39,7 @@ export let getStateByOption = (option, brushIndexs) => {
 	return {
 		chartData,
 		wrapperStyle,
+		animation,
 		charts: option.charts,
 		components: option.components,
 		colorScale,
@@ -81,7 +91,8 @@ let formaDataSet = (dataSet, brushIndexs) => {
 
 				data.data[rangeItem].push(t);
 			});
-		} else { //stack
+		} else {
+			//stack
 			data.data[rangeItem] = [];
 			data.domain.map((item, index) => {
 				let t = {
@@ -110,12 +121,13 @@ let createScale = (chartData, wrapperStyle, hasBar) => {
 	Object.keys(chartData.range).map(rangeItem => {
 		if (Array.isArray(chartData.range[rangeItem])) {
 			rangeData = [...rangeData, ...flat(chartData.range[rangeItem])];
-		} else {//stack
-			let sumArr = []
+		} else {
+			//stack
+			let sumArr = [];
 			Object.keys(chartData.range[rangeItem]).map(item => {
-				chartData.range[rangeItem][item].map((d, i)=>{
+				chartData.range[rangeItem][item].map((d, i) => {
 					sumArr[i] = sumArr[i] ? sumArr[i] + d : d;
-				})
+				});
 			});
 			rangeData = [...rangeData, ...sumArr];
 		}
@@ -174,9 +186,9 @@ export let getMapScales = mappers => {
 	return mapScales;
 };
 
-let flat = (arr) => {
+let flat = arr => {
 	while (arr.some(item => Array.isArray(item))) {
-			arr = [].concat(...arr);
+		arr = [].concat(...arr);
 	}
 	return arr;
-}
+};
