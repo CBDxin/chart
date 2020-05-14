@@ -1,4 +1,4 @@
-export default {
+export let optionSet = {
 	Area: {
 		name: "区域图",
 		option: `{
@@ -523,3 +523,174 @@ export default {
     }`
 	}
 };
+
+export let componentOptions = {
+  ToolTip:{
+    name:"数据提示组件",
+    option:`{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Line",
+          "name":"小米",
+          "key":"xiaoMi"
+        },
+        {
+          "type":"Bar",
+          "name":"苹果",
+          "key":"iPhone"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        },
+        {
+          "type":"Tooltip"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "xiaoMi":[300,500,400,20,600,900],
+          "iPhone":[500,200,500,800,300,100]
+        }
+      }
+    }`
+  },
+  Legend:{
+    name:"图例组件",
+    option:`{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Line",
+          "name":"小米",
+          "key":"xiaoMi"
+        },
+        {
+          "type":"Bar",
+          "name":"苹果",
+          "key":"iPhone"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        },
+        {
+          "type":"Legend",
+          "option":{
+            "dataItems":["xiaoMi", "iPhone"]
+          }
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "xiaoMi":[300,500,400,20,600,900],
+          "iPhone":[500,200,500,800,300,100]
+        }
+      }
+    }`
+  },
+  VisualMap:{
+    name:"视觉映射组件",
+    option:`{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Scatter",
+          "name":"苹果",
+          "key":"iPhone",
+          "VisualMap": {
+            "orient": "vertical",
+            "text": ["高", "低"],
+            "mappers": {
+              "color": {
+                "range": ["#D7DA8B", "#E15457"],
+                "data": [800, 600, 900, 1500, 300, 700]
+              },
+              "radius": {
+                "range": [1, 3],
+                "data": [800, 600, 900, 1500, 300, 700]
+              }
+            }
+          }
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6],
+        "range":{
+          "iPhone":[500,200,500,800,300,100]
+        }
+      }
+    }`
+  },
+  Brush:{
+    name:"数据区域筛选组件",
+    option:`{
+      "height": 700,
+      "width": "100%",
+      "charts":[
+        {
+          "type":"Line",
+          "name":"小米",
+          "key":"xiaoMi"
+        },
+        {
+          "type":"Bar",
+          "name":"苹果",
+          "key":"iPhone"
+        }
+      ],
+      "components":[
+        {
+          "type":"xAxis",
+          "position":"bottom"
+        },
+        {
+          "type":"yAxis",
+          "position":"left"
+        },
+        {
+          "type":"Brush",
+          "option":{
+            "startIndex":1,
+            "endIndex":8
+          }
+        }
+      ],
+      "dataSet":{
+        "domain":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+        "range":{
+          "xiaoMi":[300,500,400,20,600,900,300,500,400,20,600,900,300,500,400,20,600,900],
+          "iPhone":[500,200,500,800,300,100,500,200,500,800,300,100,500,200,500,800,300,100]
+        }
+      }
+    }`
+  }
+}

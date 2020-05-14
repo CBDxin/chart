@@ -9,7 +9,6 @@ import Charts from "./container";
 import Components from "./components";
 
 import "./index.less";
-import { animationModel } from "./util/mathUtils";
 
 /*
 state= {
@@ -201,9 +200,11 @@ export default class Chart extends Component {
 
 	updateBrushIndex = brushIndexs => {
 		let { option } = this.props;
+		let height = this.box.current ? this.box.current.clientHeight : this.state.wrapperStyle.height;
+		let width = this.box.current ? this.box.current.clientWidth : this.state.wrapperStyle.width;
 		this.setState({
 			...this.state,
-			...getStateByOption(option, brushIndexs),
+			...getStateByOption({ ...option, height: height, width: width }, brushIndexs),
 			brushIndexs: brushIndexs,
 		});
 	};

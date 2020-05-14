@@ -188,7 +188,8 @@ class Brush extends Component {
 	};
 
 	render() {
-		let { wrapperStyle } = this.props;
+    let { wrapperStyle } = this.props;
+    console.log(wrapperStyle.width, wrapperStyle.padding.left, wrapperStyle.padding.right)
 		return (
 			<g>
 				<rect
