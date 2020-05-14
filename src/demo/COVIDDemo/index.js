@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Chart from "../../chart/chart";
 import { Select } from "antd";
 import "./index.less";
-import { countryList, getOption1, getOption2, getOption3, getOption4 } from "./data.js";
+import { countryList, getOption1, getOption2, getOption3, getOption4, getOption5 } from "./data.js";
 
 class COVIDDemo extends Component {
 	constructor(props) {
@@ -41,6 +41,12 @@ class COVIDDemo extends Component {
 		return (
 			<div className="covid">
 				<div className="covid-title">新型肺炎疫情可视化分析</div>
+				<div className="block">
+					<div className="sub-title">疫情地图</div>
+					<div className="chart-wrap">
+						<Chart option={getOption5()}></Chart>
+					</div>
+				</div>
 				<div className="block">
 					<div className="sub-title">全球各国累计确诊排行</div>
 					<div className="chart-wrap">

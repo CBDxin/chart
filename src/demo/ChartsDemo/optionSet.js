@@ -370,7 +370,7 @@ export default {
     }`
 	},
 	Geo: {
-		name: "树图",
+		name: "地图",
     option: `
     {
       "height": 700,
@@ -380,9 +380,144 @@ export default {
           "type":"Geo",
           "name":"树图",
           "key":"Geo",
-          "data":{
-            "name":"all"
-          }
+          "data":[
+            {
+              "value": 1021,
+              "adcode": "810000"
+            },
+            {
+              "value": 892,
+              "adcode": "230000"
+            },
+            {
+              "value": 395,
+              "adcode": "710000"
+            },
+            {
+              "value": 6812,
+              "adcode": "420000"
+            },
+            {
+              "value": 628,
+              "adcode": "310000"
+            },
+            {
+              "value": 1579,
+              "adcode": "440000"
+            },
+            {
+              "value": 193,
+              "adcode": 150000
+            },
+            {
+              "value": 593,
+              "adcode": "110000"
+            },
+            {
+              "value": 197,
+              "adcode": "140000"
+            },
+            {
+              "value": 45,
+              "adcode": "820000"
+            },
+            {
+              "value": 1268,
+              "adcode": "330000"
+            },
+            {
+              "value": 355,
+              "adcode": "350000"
+            },
+            {
+              "value": 787,
+              "adcode": "370000"
+            },
+            {
+              "value": 189,
+              "adcode": "120000"
+            },
+            {
+              "value": 653,
+              "adcode": "320000"
+            },
+            {
+              "value": 328,
+              "adcode": "130000"
+            },
+            {
+              "value": 561,
+              "adcode": "510000"
+            },
+            {
+              "value": 184,
+              "adcode": "530000"
+            },
+            {
+              "value": 102,
+              "adcode": "220000"
+            },
+            {
+              "value": 579,
+              "adcode": "500000"
+            },
+            {
+              "value": 146,
+              "adcode": "210000"
+            },
+            {
+              "value": 256,
+              "adcode": "610000"
+            },
+            {
+              "value": 147,
+              "adcode": "520000"
+            },
+            {
+              "value": 991,
+              "adcode": "340000"
+            },
+            {
+              "value": 1019,
+              "adcode": "430000"
+            },
+            {
+              "value": 75,
+              "adcode": "640000"
+            },
+            {
+              "value": 1276,
+              "adcode": "410000"
+            },
+            {
+              "value": 168,
+              "adcode": "460000"
+            },
+            {
+              "value": 18,
+              "adcode": "630000"
+            },
+            {
+              "value": 254,
+              "adcode": "450000"
+            },
+            {
+              "value": 139,
+              "adcode": "620000"
+            },
+            {
+              "value": 76,
+              "adcode": "650000"
+            },
+            {
+              "value": 937,
+              "adcode": "360000"
+            },
+            {
+              "value": 1,
+              "adcode": "540000"
+            }
+          ]
         }
       ]
     }`
