@@ -68,11 +68,11 @@ class Tooltip extends Component {
 			wrapperStyle.height - wrapperStyle.padding.bottom
 		);
 
-		console.log(
-			activeTickItem.activeTickPostion,
-			this.box.current.clientWidth,
-			wrapperStyle.width - wrapperStyle.padding.right 
-    )
+		// console.log(
+		// 	activeTickItem.activeTickPostion,
+		// 	this.box.current.clientWidth,
+		// 	wrapperStyle.width - wrapperStyle.padding.right 
+    // )
 
 		this.setState({
 			boxStyle: {
