@@ -11,7 +11,7 @@ let defaultPadding = {
 };
 
 export let getStateByOption = (option, brushIndexs) => {
-	let chartData = formaDataSet(option.dataSet, brushIndexs);
+	let chartData = formaDataSet(option.dataSet, hasType(option.components, "Brush") ? brushIndexs : undefined);
 	let wrapperStyle = {
 		height: option.height || 500,
 		width: option.width || 800,
@@ -43,6 +43,7 @@ export let getStateByOption = (option, brushIndexs) => {
 		charts: option.charts,
 		components: option.components,
 		colorScale,
+		brushIndexs,
 		...scaleMap,
 	};
 };

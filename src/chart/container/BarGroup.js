@@ -20,7 +20,7 @@ class BarGroupChart extends Component {
 	formatData = props => {
     let { data, xScale, yScale } = props || this.props;
     
-    console.log(data)
+    // console.log(data)
 
 		let formatedData = data.map(item => {
 			return {
