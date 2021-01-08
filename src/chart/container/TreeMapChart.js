@@ -21,6 +21,8 @@ class TreeMapChart extends Component{
   formatData = (props)=>{
     let { data, wrapperStyle:{width, height} } = props || this.props;
 
+    console.log('---hierarchy',hierarchy(data))
+
     let treemapCreator = treemap().size([width*0.6,height*0.6])
     let root = hierarchy(data).sum(d =>d.value)
     let tree = treemapCreator(root)

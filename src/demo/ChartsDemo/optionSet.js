@@ -22,12 +22,12 @@ export let optionSet = {
         }
       ],
       "dataSet":{
-        "domain":[1,2,3,4,5,6],
+        "domain":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
         "range":{
-          "Area":[300,500,400,20,600,900]
+          "Area":[300,50,200,80,40,200,60,200,600,700,72,50,304,604,785]
         }
       }
-    }`
+    }`,
 	},
 	AreaStack: {
 		name: "图",
@@ -62,7 +62,7 @@ export let optionSet = {
           }
         }
       }
-    }`
+    }`,
 	},
 	Bar: {
 		name: "柱状图",
@@ -92,7 +92,7 @@ export let optionSet = {
           "Bar":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	BarStack: {
 		name: "柱状图",
@@ -127,7 +127,7 @@ export let optionSet = {
           }
         }
       }
-    }`
+    }`,
 	},
 	BarGroup: {
 		name: "柱状图",
@@ -157,7 +157,7 @@ export let optionSet = {
           "BarGroup":[[150,800,500],[100,300,500],[500,70,400],[800,200,550],[1000,300,300],[200,800,200]]
         }
       }
-    }`
+    }`,
 	},
 	Line: {
 		name: "折线图",
@@ -187,7 +187,7 @@ export let optionSet = {
           "Line":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	Scatter: {
 		name: "散点图",
@@ -218,7 +218,7 @@ export let optionSet = {
           "Scatter":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	Pie: {
 		name: "饼图",
@@ -238,7 +238,7 @@ export let optionSet = {
           "Pie":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	PolarScatter: {
 		name: "雷达图",
@@ -258,7 +258,7 @@ export let optionSet = {
           "PolarScatter":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	Radar: {
 		name: "雷达图",
@@ -278,7 +278,7 @@ export let optionSet = {
           "Radar":[300,500,400,20,600,900]
         }
       }
-    }`
+    }`,
 	},
 	TreeMap: {
 		name: "矩阵树图",
@@ -322,11 +322,11 @@ export let optionSet = {
           }
         }
       ]
-    }`
+    }`,
 	},
 	Tree: {
 		name: "树图",
-    option: `
+		option: `
     {
       "height": 700,
       "width": "100%",
@@ -367,11 +367,11 @@ export let optionSet = {
           }
         }
       ]
-    }`
+    }`,
 	},
 	Geo: {
 		name: "地图",
-    option: `
+		option: `
     {
       "height": 700,
       "width": "100%",
@@ -520,14 +520,14 @@ export let optionSet = {
           ]
         }
       ]
-    }`
-	}
+    }`,
+	},
 };
 
 export let componentOptions = {
-  ToolTip:{
-    name:"数据提示组件",
-    option:`{
+	ToolTip: {
+		name: "数据提示组件",
+		option: `{
       "height": 700,
       "width": "100%",
       "charts":[
@@ -562,11 +562,11 @@ export let componentOptions = {
           "iPhone":[500,200,500,800,300,100]
         }
       }
-    }`
-  },
-  Legend:{
-    name:"图例组件",
-    option:`{
+    }`,
+	},
+	Legend: {
+		name: "图例组件",
+		option: `{
       "height": 700,
       "width": "100%",
       "charts":[
@@ -604,11 +604,11 @@ export let componentOptions = {
           "iPhone":[500,200,500,800,300,100]
         }
       }
-    }`
-  },
-  VisualMap:{
-    name:"视觉映射组件",
-    option:`{
+    }`,
+	},
+	VisualMap: {
+		name: "视觉映射组件",
+		option: `{
       "height": 700,
       "width": "100%",
       "charts":[
@@ -648,11 +648,11 @@ export let componentOptions = {
           "iPhone":[500,200,500,800,300,100]
         }
       }
-    }`
-  },
-  Brush:{
-    name:"数据区域筛选组件",
-    option:`{
+    }`,
+	},
+	Brush: {
+		name: "数据区域筛选组件",
+		option: `{
       "height": 700,
       "width": "100%",
       "charts":[
@@ -691,6 +691,6 @@ export let componentOptions = {
           "iPhone":[500,200,500,800,300,100,500,200,500,800,300,100,500,200,500,800,300,100]
         }
       }
-    }`
-  }
-}
+    }`,
+	},
+};

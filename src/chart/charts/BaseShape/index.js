@@ -135,9 +135,9 @@ class BaseChart extends Component {
 				item.x
 			);
 			return {
-				x: interpolatorX(precent),
+				// x: interpolatorX(precent),
 				y: interpolatorY(precent),
-				// x:item.x,
+				x:item.x,
 				// y:item.y
 			};
 		});
